@@ -19,7 +19,7 @@ const HomePage = () => {
   }, []);
 
   const translate = async () => {
-    const fetchPromise = fetch("http://localhost:4000/");
+    const fetchPromise = fetch("http://localhost:4000/translate");
 
     fetchPromise
       .then((response) => response.json())

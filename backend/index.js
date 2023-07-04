@@ -23,6 +23,10 @@ app.get("/", (req, res) => {
     .catch((err) => `An error ocurred: ${err}`);
 });
 
+app.get("/translate", (req, res) => {
+  // some code here;
+});
+
 app.listen(4000, () => {
   return console.log("App listening on port 4000");
 });
