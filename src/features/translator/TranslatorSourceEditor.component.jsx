@@ -1,12 +1,17 @@
 import React from "react";
 import { GrammarlyEditorPlugin } from "@grammarly/editor-sdk-react";
-import "../home page/homePage.styles.scss";
+import "../../components/home page/homePage.styles.scss";
 import { useState } from "react";
 import { reactLocalStorage } from "reactjs-localstorage";
 import { useEffect } from "react";
+// import { useSelector, useDispatch } from "react-redux";
+import { setTextSource, textSourceSelector } from "./translatorSlice.js";
 
-const TextEditor = () => {
+const TranslatorSourceEditor = () => {
   const [content, setContent] = useState("");
+  //   const textSource = useSelector(textSourceSelector);
+  //   console.log(`Text source: "${textSource}"`);
+  //   const dispatch = useDispatch();
 
   const onHandleChange = (e) => {
     setContent(e.target.value);
@@ -33,4 +38,4 @@ const TextEditor = () => {
   );
 };
 
-export default TextEditor;
+export default TranslatorSourceEditor;

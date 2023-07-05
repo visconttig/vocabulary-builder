@@ -4,14 +4,20 @@ const bodyParser = require("body-parser");
 
 const app = express();
 require("dotenv").config();
-app.use(cors());
-app.use(bodyParser.urlencoded({ extended: false }));
 
-console.log(process.env.SPANISH_API_KEY);
+let corsOptions = {
+  origin: "*",
+};
+app.use(cors(corsOptions));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+// app.use(express.json());
+// app.use(express.urlencoded());
 
 app.get("/", (req, res) => {
+  const postId = Math.floor(Math.random() * 10 + 1);
   const translationPromise = fetch(
-    "https://jsonplaceholder.typicode.com/posts/5"
+    `https://jsonplaceholder.typicode.com/posts/${postId}`
   );
 
   translationPromise
@@ -23,8 +29,11 @@ app.get("/", (req, res) => {
     .catch((err) => `An error ocurred: ${err}`);
 });
 
-app.get("/translate", (req, res) => {
-  // some code here;
+app.post("/translations/translate", async (req, res) => {
+  const text = req.body;
+  console.log(`Recieved: "${req.body.translateText}"`);
+  res.setHeader("Content-Type", "application/json");
+  res.send(JSON.stringify(text));
 });
 
 app.listen(4000, () => {

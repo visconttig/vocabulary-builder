@@ -1,6 +1,6 @@
 import React from "react";
 import "./homePage.styles.scss";
-import TextEditor from "../text editor/TextEditor.component.jsx";
+import TranslatorSourceEditor from "../../features/translator/TranslatorSourceEditor.component.jsx";
 import { useState } from "react";
 import { useEffect } from "react";
 import { reactLocalStorage } from "reactjs-localstorage";
@@ -10,32 +10,42 @@ const HomePage = () => {
 
   const initialText =
     "Hi Hope you’ve been enjoying our services so far.We want to continue offering the best service. Could you please take five minutes and fill up this feedback form for us [share link to form]?";
-  // const translation =
-  //   "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
 
   useEffect(() => {
     const translatedText = reactLocalStorage.get("translation");
     setTranslation(translatedText);
+
+    return () => {
+      console.log("This was returned from 'useEffect()'");
+      console.log(translation);
+    };
   }, []);
 
   const translate = async () => {
-    const fetchPromise = fetch("http://localhost:4000/translate");
+    const translatePromise = fetch(
+      "http://localhost:4000/translations/translate",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+        body: JSON.stringify({
+          translateText: `${initialText}`,
+        }),
+      }
+    );
 
-    fetchPromise
+    translatePromise
       .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        setTranslation(data.body);
-
-        reactLocalStorage.set("translation", data.body);
-      });
+      .then((data) => console.log(`Recieved: "${data.translateText}"`));
   };
 
   return (
     <>
       <div className="main-container">
         <div className="translator-container">
-          <TextEditor />
+          <TranslatorSourceEditor />
         </div>
         <div className="translation-field main-text">{translation}</div>
       </div>
