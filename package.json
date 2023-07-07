@@ -1,0 +1,21 @@
+{
+  "name": "vocabulary-builder",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "client": "npm start --prefix client",
+    "server": "cd ./server/src & node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/visconttig/vocabulary-builder.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/visconttig/vocabulary-builder/issues"
+  },
+  "homepage": "https://github.com/visconttig/vocabulary-builder#readme"
+}

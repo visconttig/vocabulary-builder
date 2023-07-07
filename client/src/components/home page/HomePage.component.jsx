@@ -1,27 +1,26 @@
 import React from "react";
 import "./homePage.styles.scss";
 import TranslatorSourceEditor from "../../features/translator/TranslatorSourceEditor.component.jsx";
-import { useState } from "react";
 import { useEffect } from "react";
 import { reactLocalStorage } from "reactjs-localstorage";
 
+import { useDispatch, useSelector } from "react-redux";
+import { setTranslatedText } from "../../features/translator/translatorSlice.js";
+
 const HomePage = () => {
-  const [translation, setTranslation] = useState("Text translation here...");
+  const dispatch = useDispatch;
+  const translation = useSelector((store) => store.translator.translatedText);
 
-  const initialText =
-    "Hi Hope you’ve been enjoying our services so far.We want to continue offering the best service. Could you please take five minutes and fill up this feedback form for us [share link to form]?";
+  // useEffect(() => {
+  //   const translatedText = reactLocalStorage.get("translation");
+  //   setTranslation(translatedText);
+  // }, []);
 
-  useEffect(() => {
-    const translatedText = reactLocalStorage.get("translation");
-    setTranslation(translatedText);
+  /* --- for testing --- */
+  const toTranslateText = "Hi Hope you’ve been enjoying our services so far";
+  const translationPlaceholderText = "El texto traducido aparecerá aquí...";
 
-    return () => {
-      console.log("This was returned from 'useEffect()'");
-      console.log(translation);
-    };
-  }, []);
-
-  const translate = async () => {
+  const onHttpTranslateHandle = async () => {
     const translatePromise = fetch(
       "http://localhost:4000/translations/translate",
       {
@@ -31,14 +30,16 @@ const HomePage = () => {
           "Access-Control-Allow-Origin": "*",
         },
         body: JSON.stringify({
-          translateText: `${initialText}`,
+          translateText: `${toTranslateText}`,
         }),
       }
     );
 
     translatePromise
       .then((response) => response.json())
-      .then((data) => console.log(`Recieved: "${data.translateText}"`));
+      .then((data) => {
+        console.log(`Recieved: "${data.translateText}"`);
+      });
   };
 
   return (
@@ -47,10 +48,12 @@ const HomePage = () => {
         <div className="translator-container">
           <TranslatorSourceEditor />
         </div>
-        <div className="translation-field main-text">{translation}</div>
+        <div className="translation-field main-text">
+          {translation.lenght > 0 ? translation : translationPlaceholderText}
+        </div>
       </div>
       <div className="buttons-container">
-        <button className="translate-button" onClick={translate}>
+        <button className="translate-button" onClick={onHttpTranslateHandle}>
           Translate
         </button>
         {/* <button className="generate-vocab">Extract Vocabulary</button>

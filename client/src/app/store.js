@@ -1,7 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
+import translatorReducer from "../features/translator/translatorSlice.js";
 
-const store = configureStore({
-  // reducer: vocabularyReducer;
+export default configureStore({
+  reducer: {
+    translator: translatorReducer,
+  },
+  devTools: true,
 });
-
-export default store;
