@@ -5,42 +5,19 @@ import { useEffect } from "react";
 import { reactLocalStorage } from "reactjs-localstorage";
 
 import { useDispatch, useSelector } from "react-redux";
-import { setTranslatedText } from "../../features/translator/translatorSlice.js";
+
+import TranslatorDestinationView from "../../features/translator/TranslatorDestinationView.component.jsx";
+import TranslateButton from "../buttons/TranslateButton.component.jsx";
 
 const HomePage = () => {
   const dispatch = useDispatch;
-  const translation = useSelector((store) => store.translator.translatedText);
 
   // useEffect(() => {
   //   const translatedText = reactLocalStorage.get("translation");
   //   setTranslation(translatedText);
   // }, []);
 
-  /* --- for testing --- */
-  const toTranslateText = "Hi Hope you’ve been enjoying our services so far";
-  const translationPlaceholderText = "El texto traducido aparecerá aquí...";
-
-  const onHttpTranslateHandle = async () => {
-    const translatePromise = fetch(
-      "http://localhost:4000/translations/translate",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-        },
-        body: JSON.stringify({
-          translateText: `${toTranslateText}`,
-        }),
-      }
-    );
-
-    translatePromise
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(`Recieved: "${data.translateText}"`);
-      });
-  };
+  const onHttpTranslateHandle = async () => {};
 
   return (
     <>
@@ -48,13 +25,16 @@ const HomePage = () => {
         <div className="translator-container">
           <TranslatorSourceEditor />
         </div>
-        <div className="translation-field main-text">
-          {translation.lenght > 0 ? translation : translationPlaceholderText}
-        </div>
+        <TranslatorDestinationView />
+        <TranslateButton
+          style={{
+            border: "2px solid red",
+          }}
+        />
       </div>
       <div className="buttons-container">
-        <button className="translate-button" onClick={onHttpTranslateHandle}>
-          Translate
+        <button className="translate-button" onClick={() => {}}>
+          PLACEHOLDER BUTTON
         </button>
         {/* <button className="generate-vocab">Extract Vocabulary</button>
         <button className="study-vocab">Study Vocabulary</button>
