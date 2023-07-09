@@ -13,13 +13,10 @@ const TranslateButton = ({ style }) => {
   const translationStatus = useSelector(
     (store) => store.translator.loadingTranslation
   );
+  const toTranslateText = useSelector((store) => store.translator.sourceText);
 
-  console.log(`TRANS_BUTT: ${translatedText}`);
-
-  const onClickHandler = () => {
-    const result = dispatch(translateText("this should be translated."));
-    // set loading status ??
-    console.log(`TRANSLATION STATUS: ${translationStatus}`);
+  const onClickHandler = async () => {
+    dispatch(translateText(toTranslateText));
   };
 
   return (

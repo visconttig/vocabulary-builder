@@ -4,56 +4,30 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 export const translateText = createAsyncThunk(
   "translator/translateText",
   async (toTranslateText) => {
-    const response = await fetch(
-      "http://localhost:4000/translations/translate",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-        },
-        body: JSON.stringify({
-          translateText: `${toTranslateText}`,
-        }),
-      }
-    );
-
-    response
+    const response = fetch("http://localhost:4000/translations/translate", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify({
+        translateText: `${toTranslateText}`,
+      }),
+    })
       .then((response) => response.json())
       .then((data) => {
-        return (data) => data.translateText;
+        console.log(`RESULT DATA: ${data.translateText}`);
+        console.log(`DATA AFTER AWAIT: ${data.translateText}`);
+        return data;
       })
       .catch((err) => {
-        console.log(`ERROR 2: ${err}`);
+        return `An error ocurred: ${err}`;
       });
+
+    const result = await response;
+    return result.translateText;
   }
 );
-
-/*    ******** ORIGINAL FUNCITON *****************
-
-    // dispatch(translateText(toTranslateText));
-    // const translatePromise = fetch(
-    //   "http://localhost:4000/translations/translate",
-    //   {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //       "Access-Control-Allow-Origin": "*",
-    //     },
-    //     body: JSON.stringify({
-    //       translateText: `${toTranslateText}`,
-    //     }),
-    //   }
-    // );
-    // translatePromise
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     console.log(`Recieved: "${data.translateText}"`);
-    //     // httpTranslation = data;
-    //     // callDispatch(data);
-    //   });
-
-    **************************** */
 
 const loadingTranslationStatuses = {
   IDDLE: "iddle",
@@ -84,10 +58,14 @@ const translatorSlice = createSlice({
       translateText.fulfilled,
       (state, action) => {
         state.translatedText = action.payload;
+
+        /* --- TESTING --- */
+        console.log(`FULFILLED: ${action.payload}`);
         state.loadingTranslation = loadingTranslationStatuses.SUCCEEDED;
       },
       builder.addCase(translateText.rejected, (state, action) => {
         state.error = action.error;
+        state.loadingTranslation = loadingTranslationStatuses.FAILED;
         console.log(`ERROR: ${action.error}`);
       })
     );

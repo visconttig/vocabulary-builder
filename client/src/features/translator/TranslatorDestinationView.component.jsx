@@ -9,7 +9,7 @@ const TranslatorDestinationView = () => {
   return (
     <>
       <div className="translation-field main-text">
-        {translation.lenght > 0 ? translation : translationPlaceholderText}
+        {translation?.lenght > 0 ? translation : translationPlaceholderText}
       </div>
     </>
   );
