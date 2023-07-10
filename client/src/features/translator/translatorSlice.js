@@ -1,9 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { reactLocalStorage } from "reactjs-localstorage";
 
 export const translateText = createAsyncThunk(
   "translator/translateText",
-  async (toTranslateText) => {
+  async ({ sourceLanguage, targetLanguage, toTranslateText }) => {
     const response = fetch("http://localhost:4000/translations/translate", {
       method: "POST",
       headers: {
@@ -11,13 +12,15 @@ export const translateText = createAsyncThunk(
         "Access-Control-Allow-Origin": "*",
       },
       body: JSON.stringify({
-        translateText: `${toTranslateText}`,
+        toTranslateText: `${toTranslateText}`,
+        sourceLanguage: `${sourceLanguage}`,
+        targetLanguage: `${targetLanguage}`,
       }),
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(`RESULT DATA: ${data.translateText}`);
-        console.log(`DATA AFTER AWAIT: ${data.translateText}`);
+        JSON.stringify(data);
+        console.log(`RESULT DATA on SLICE: ${JSON.stringify(data)}`);
         return data;
       })
       .catch((err) => {
@@ -25,7 +28,7 @@ export const translateText = createAsyncThunk(
       });
 
     const result = await response;
-    return result.translateText;
+    return result.title;
   }
 );
 
@@ -44,23 +47,33 @@ const translatorSlice = createSlice({
     /* iddle | pending | succeeded | failed */
     loadingTranslation: "idle",
     error: null,
+    sourceLanguage: "en",
+    targetLanguage: "es",
   },
   reducers: {
     setSourceText: (state, action) => {
       state.sourceText = action.payload;
+      reactLocalStorage.set("sourceText", `${action.payload}`);
     },
     setTranslatedText: (state, action) => {
       state.translatedText = action.payload;
+      reactLocalStorage.set("translatedText", `${action.payload}`);
     },
+    /* TODO: add language setters here***
+     ***
+     ***
+     */
   },
   extraReducers: (builder) => {
     builder.addCase(
       translateText.fulfilled,
       (state, action) => {
         state.translatedText = action.payload;
+        reactLocalStorage.set("translatedText", action.payload);
 
         /* --- TESTING --- */
         console.log(`FULFILLED: ${action.payload}`);
+        console.log(`PAYLOAD: ${JSON.stringify(action.payload)}`);
         state.loadingTranslation = loadingTranslationStatuses.SUCCEEDED;
       },
       builder.addCase(translateText.rejected, (state, action) => {

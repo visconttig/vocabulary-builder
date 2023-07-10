@@ -6,6 +6,7 @@
   "scripts": {
     "client": "npm start --prefix client",
     "server": "cd ./server/src & node index.js",
+    "watch": "cd ./server/src & nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

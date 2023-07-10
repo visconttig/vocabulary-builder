@@ -4,21 +4,25 @@ import "../../components/home page/homePage.styles.scss";
 import { reactLocalStorage } from "reactjs-localstorage";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setSourceText } from "./translatorSlice.js";
+import { setSourceText, setTranslatedText } from "./translatorSlice.js";
 
 const TranslatorSourceEditor = () => {
   const sourceText = useSelector((store) => store.translator.sourceText);
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    const sourceText = reactLocalStorage.get("sourceText");
+
+    if (sourceText?.length > 0 && sourceText != undefined) {
+      dispatch(setSourceText(sourceText));
+    }
+  }, []);
+
   const onHandleChange = (e) => {
     dispatch(setSourceText(e.target.value));
-    reactLocalStorage.set("mainContent", sourceText);
+    // reset translated text
+    dispatch(setTranslatedText(""));
   };
-
-  // useEffect(() => {
-  //   const text = reactLocalStorage.get("mainContent");
-  //   dispatch(setSourceText(text));
-  // }, []);
 
   return (
     <GrammarlyEditorPlugin clientId="client_5VsYi16JNi9w5uKzsrXWwH">

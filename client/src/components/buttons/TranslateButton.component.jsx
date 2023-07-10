@@ -14,13 +14,27 @@ const TranslateButton = ({ style }) => {
     (store) => store.translator.loadingTranslation
   );
   const toTranslateText = useSelector((store) => store.translator.sourceText);
+  const sourceLanguage = useSelector(
+    (store) => store.translator.sourceLanguage
+  );
+  const targetLanguage = useSelector(
+    (store) => store.translator.targetLanguage
+  );
+
+  const translateData = {
+    sourceLanguage,
+    targetLanguage,
+    toTranslateText,
+  };
 
   const onClickHandler = async () => {
-    dispatch(translateText(toTranslateText));
+    dispatch(translateText(translateData));
+    console.log(`TARGET LANGUAGE ${targetLanguage}`);
+    console.log(`SOURCE LANGUAGE: ${sourceLanguage}`);
   };
 
   return (
-    <button onClick={onClickHandler} style={style}>
+    <button onClick={onClickHandler} style={style} name="translate-button">
       TRANSLATE BUTTON
     </button>
   );
