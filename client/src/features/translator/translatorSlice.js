@@ -28,7 +28,7 @@ export const translateText = createAsyncThunk(
       });
 
     const result = await response;
-    return result.title;
+    return result;
   }
 );
 
@@ -72,8 +72,7 @@ const translatorSlice = createSlice({
         reactLocalStorage.set("translatedText", action.payload);
 
         /* --- TESTING --- */
-        console.log(`FULFILLED: ${action.payload}`);
-        console.log(`PAYLOAD: ${JSON.stringify(action.payload)}`);
+        // console.log(`FULFILLED: ${action.payload}`);
         state.loadingTranslation = loadingTranslationStatuses.SUCCEEDED;
       },
       builder.addCase(translateText.rejected, (state, action) => {

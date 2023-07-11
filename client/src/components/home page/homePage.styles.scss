@@ -9,6 +9,9 @@
   margin: 1vw;
   overflow-y: auto;
   resize: none;
+
+  // to preserve white spaces
+  white-space: pre-line;
 }
 
 * {
