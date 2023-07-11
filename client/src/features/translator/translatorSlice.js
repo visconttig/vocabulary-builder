@@ -10,6 +10,7 @@ export const translateText = createAsyncThunk(
       headers: {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
+        "With-Credentials": "true",
       },
       body: JSON.stringify({
         toTranslateText: `${toTranslateText}`,

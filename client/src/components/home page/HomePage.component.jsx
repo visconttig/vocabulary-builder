@@ -8,14 +8,10 @@ import { useDispatch, useSelector } from "react-redux";
 
 import TranslatorDestinationView from "../../features/translator/TranslatorDestinationView.component.jsx";
 import TranslateButton from "../buttons/TranslateButton.component.jsx";
+import ExplainGrammarButton from "../buttons/ExplainGrammarButton.component.jsx";
 
 const HomePage = () => {
   const dispatch = useDispatch;
-
-  // useEffect(() => {
-  //   const translatedText = reactLocalStorage.get("translation");
-  //   setTranslation(translatedText);
-  // }, []);
 
   const onHttpTranslateHandle = async () => {};
 
@@ -26,16 +22,11 @@ const HomePage = () => {
           <TranslatorSourceEditor />
         </div>
         <TranslatorDestinationView />
-        <TranslateButton
-          style={{
-            border: "2px solid red",
-          }}
-        />
+        <ExplainGrammarButton />
       </div>
       <div className="buttons-container">
-        <button className="translate-button" onClick={() => {}}>
-          PLACEHOLDER BUTTON
-        </button>
+        <TranslateButton />
+
         {/* <button className="generate-vocab">Extract Vocabulary</button>
         <button className="study-vocab">Study Vocabulary</button>
         <button className="study-saved-vocab">Study Saved Vocabulary</button>

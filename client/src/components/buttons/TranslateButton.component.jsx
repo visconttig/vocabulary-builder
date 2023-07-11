@@ -29,8 +29,8 @@ const TranslateButton = ({ style }) => {
 
   const onClickHandler = async () => {
     dispatch(translateText(translateData));
-    console.log(`TARGET LANGUAGE ${targetLanguage}`);
-    console.log(`SOURCE LANGUAGE: ${sourceLanguage}`);
+    // console.log(`TARGET LANGUAGE ${targetLanguage}`);
+    // console.log(`SOURCE LANGUAGE: ${sourceLanguage}`);
   };
 
   return (
