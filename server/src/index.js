@@ -4,7 +4,8 @@ const bodyParser = require("body-parser");
 // const translationsRouter = require("./routes/translations.routes.js");
 
 const translationsControler = require("./routes/translations.controller.js");
-const grammarController = require("./routes/grammar.controller.js");
+// const grammarController = require("./routes/grammar.controller.js");
+const nlpController = require("./routes/nlp.controller.js");
 
 const app = express();
 require("dotenv").config();
@@ -27,7 +28,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.post("/translations/translate", translationsControler.postTranslate);
 
 /*    *** NOT ENOUGH QUOTA TO PROCEED*** */
-// app.post("/grammar/explain", grammarController.postExplainGrammar);
+// app.post("/grammar/explain", grammarController.openAi.controller.js);
+
+app.post("/grammar/nlp/tokens", nlpController.postExtractTokens);
+app.post("/grammar/nlp/mark-up", nlpController.postMarkUpText);
 
 app.listen(4000, () => {
   return console.log("App listening on port 4000");
