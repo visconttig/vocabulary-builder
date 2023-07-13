@@ -1,6 +1,4 @@
 .nlp-container {
-  // font-size: 1.8rem;
-  // background-color: rgb(0, 0, 0);
   width: 80vw;
   overflow-x: hidden;
 
@@ -14,8 +12,6 @@
 .surface-container {
   padding-top: 50px;
   min-height: 200px;
-
-  // border: 3px solid rgb(236, 227, 227);
 }
 
 .surface {
@@ -30,22 +26,13 @@
   margin: 0;
   padding: 0;
   // WARNING: ***DON'T CHANGE THIS FONT SIZE***
-  font-size: 1.3rem;
+  font-size: 1.4rem;
   font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
   color: #aab1be;
   top: 0;
   left: 0;
   line-height: 2.5;
 }
-
-// .surface #input {
-//   opacity: 0.5;
-//   position: relative;
-// }
-
-// .surface #input:focus {
-//   outline: none;
-// }
 
 /* Tags in Surface */
 span.tag {
@@ -58,6 +45,7 @@ span.tag {
 
 span.tag::after {
   font-size: 11px;
+  font-weight: 500;
   text-transform: uppercase;
   position: absolute;
   top: -20px;
@@ -65,9 +53,12 @@ span.tag::after {
   padding: 0;
   margin: 0;
   width: 100%;
-  /* border-bottom: 2px solid #fff; */
   color: #4e535c;
-  border-color: #282c34;
+}
+
+// base text
+span.tag {
+  color: rgb(206, 199, 199);
 }
 
 /* Numbers are green */
@@ -193,15 +184,29 @@ span.EMOTICON::after {
 
 span.ADJ::after {
   content: "adj";
+  color: rgb(238, 255, 0);
 }
+
+span.ADJ {
+  color: rgb(238, 255, 0);
+}
+
 span.ADP::after {
   content: "adp";
+  color: rgb(45, 204, 5);
+}
+
+span.ADV,
+span.ADP {
+  color: rgb(45, 204, 5);
 }
 span.ADV::after {
   content: "adv";
+  color: rgb(45, 204, 5);
 }
 span.AUX::after {
   content: "aux";
+  color: rgb(255, 0, 234);
 }
 span.CCONJ::after {
   content: "cconj";
@@ -238,6 +243,12 @@ span.SYM::after {
 }
 span.VERB::after {
   content: "verb";
+  color: rgb(255, 0, 0);
+}
+
+span.VERB {
+  color: red;
+  text-decoration: underline;
 }
 span.X::after {
   content: "x";

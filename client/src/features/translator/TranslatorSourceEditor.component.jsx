@@ -17,6 +17,7 @@ const TranslatorSourceEditor = () => {
 
     if (sourceText?.length > 0 && sourceText != undefined) {
       dispatch(setSourceText(sourceText));
+      dispatch(getGrammar(sourceText));
     }
   }, []);
 
