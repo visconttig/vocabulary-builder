@@ -6,6 +6,8 @@ import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setSourceText, setTranslatedText } from "./translatorSlice.js";
 
+import { getGrammar } from "../grammar/grammarSlice.js";
+
 const TranslatorSourceEditor = () => {
   const sourceText = useSelector((store) => store.translator.sourceText);
   const dispatch = useDispatch();
@@ -20,6 +22,7 @@ const TranslatorSourceEditor = () => {
 
   const onHandleChange = (e) => {
     dispatch(setSourceText(e.target.value));
+    dispatch(getGrammar(e.target.value));
     // reset translated text
     dispatch(setTranslatedText(""));
   };
@@ -31,7 +34,7 @@ const TranslatorSourceEditor = () => {
         id=""
         cols="30"
         rows="10"
-        className="main-text"
+        className="main-text "
         onChange={onHandleChange}
         value={sourceText}
         placeholder="Escribe aquí para recibir sugerencias de corrección y traducir el texto..."

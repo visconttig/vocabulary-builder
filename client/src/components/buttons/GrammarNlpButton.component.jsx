@@ -1,8 +1,11 @@
 import React from "react";
 
-const ExplainGrammarButton = () => {
+const GrammarNlpButton = () => {
   const onClickHandler = () => {
-    // call http action here
+    // // call http action
+    // fetch("http://localhost:4000/grammar/nlp/tokens", {
+    //   method: "POST",
+    // });
   };
 
   return (
@@ -12,9 +15,9 @@ const ExplainGrammarButton = () => {
       }}
       onClick={onClickHandler}
     >
-      EXPLAIN GRAMMAR
+      ANALYZE
     </button>
   );
 };
 
-export default ExplainGrammarButton;
+export default GrammarNlpButton;

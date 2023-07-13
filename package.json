@@ -6,7 +6,7 @@
   "scripts": {
     "client": "npm start --prefix client",
     "server": "cd ./server & node ./src index.js",
-    "watch": "cd ./server/src & nodemon index.js",
+    "watch": "nodemon ./server/src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/visconttig/vocabulary-builder/issues"
   },
-  "homepage": "https://github.com/visconttig/vocabulary-builder#readme"
+  "homepage": "https://github.com/visconttig/vocabulary-builder#readme",
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
 }

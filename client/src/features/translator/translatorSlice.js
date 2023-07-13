@@ -2,10 +2,12 @@ import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { reactLocalStorage } from "reactjs-localstorage";
 
+const URL_ENDPOINT = "http://localhost:4000/translations/translate";
+
 export const translateText = createAsyncThunk(
   "translator/translateText",
   async ({ sourceLanguage, targetLanguage, toTranslateText }) => {
-    const response = fetch("http://localhost:4000/translations/translate", {
+    const response = fetch(URL_ENDPOINT, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -46,7 +48,7 @@ const translatorSlice = createSlice({
     sourceText: "",
     translatedText: "",
     /* iddle | pending | succeeded | failed */
-    loadingTranslation: "idle",
+    loadingTranslation: loadingTranslationStatuses.IDDLE,
     error: null,
     sourceLanguage: "en",
     targetLanguage: "es",
@@ -71,9 +73,6 @@ const translatorSlice = createSlice({
       (state, action) => {
         state.translatedText = action.payload;
         reactLocalStorage.set("translatedText", action.payload);
-
-        /* --- TESTING --- */
-        // console.log(`FULFILLED: ${action.payload}`);
         state.loadingTranslation = loadingTranslationStatuses.SUCCEEDED;
       },
       builder.addCase(translateText.rejected, (state, action) => {

@@ -29,13 +29,11 @@ const TranslateButton = ({ style }) => {
 
   const onClickHandler = async () => {
     dispatch(translateText(translateData));
-    // console.log(`TARGET LANGUAGE ${targetLanguage}`);
-    // console.log(`SOURCE LANGUAGE: ${sourceLanguage}`);
   };
 
   return (
     <button onClick={onClickHandler} style={style} name="translate-button">
-      TRANSLATE BUTTON
+      TRANSLATE
     </button>
   );
 };

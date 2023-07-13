@@ -1,11 +1,14 @@
 .main-text {
-  background-color: #f3f3f3;
-  font-size: 1.3rem;
+  color: white;
+  border: 2px solid grey;
+
+  font-size: 1rem;
   font-style: italic;
   font-weight: 500;
   border-radius: 8px;
   width: 40vw;
-  height: 80vh;
+  // height: 80vh;
+  min-height: 25vh;
   margin: 1vw;
   overflow-y: auto;
   resize: none;
@@ -15,8 +18,13 @@
   text-align: justify;
 }
 
-* {
-  background-color: rgb(184, 165, 165);
+textarea {
+  background-color: inherit;
+}
+
+body {
+  // background-color: rgb(184, 165, 165);
+  background-color: black;
 }
 
 .translate-button {
@@ -27,7 +35,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  // flex-wrap: wrap;
+  flex-wrap: wrap;
 }
 
 .translation-field {

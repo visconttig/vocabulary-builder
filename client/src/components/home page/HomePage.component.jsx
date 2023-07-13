@@ -1,20 +1,15 @@
 import React from "react";
 import "./homePage.styles.scss";
 import TranslatorSourceEditor from "../../features/translator/TranslatorSourceEditor.component.jsx";
-import { useEffect } from "react";
-import { reactLocalStorage } from "reactjs-localstorage";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import TranslatorDestinationView from "../../features/translator/TranslatorDestinationView.component.jsx";
 import TranslateButton from "../buttons/TranslateButton.component.jsx";
-import ExplainGrammarButton from "../buttons/ExplainGrammarButton.component.jsx";
+import GrammarNlpButton from "../buttons/GrammarNlpButton.component.jsx";
+import GrammarNlpView from "../../features/grammar/GrammarNlpView.component";
 
 const HomePage = () => {
-  const dispatch = useDispatch;
-
-  const onHttpTranslateHandle = async () => {};
-
   return (
     <>
       <div className="main-container">
@@ -22,15 +17,11 @@ const HomePage = () => {
           <TranslatorSourceEditor />
         </div>
         <TranslatorDestinationView />
-        <ExplainGrammarButton />
+        <GrammarNlpView />
       </div>
       <div className="buttons-container">
         <TranslateButton />
-
-        {/* <button className="generate-vocab">Extract Vocabulary</button>
-        <button className="study-vocab">Study Vocabulary</button>
-        <button className="study-saved-vocab">Study Saved Vocabulary</button>
-        <button className="read-aloud">Read / Create Audio</button> */}
+        <GrammarNlpButton />
       </div>
     </>
   );
