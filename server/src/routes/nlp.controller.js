@@ -3,8 +3,12 @@ const winkNLP = require("wink-nlp");
 
 const exampleData = {
   nlpGrammar: "",
-  words: [],
+  posWords: null,
+  sentences: [],
 };
+
+exampleData.posWords = new Map();
+const posWords = exampleData.posWords;
 
 // load english model
 const model = require("wink-eng-lite-web-model");
@@ -17,74 +21,60 @@ const as = nlp.as;
 
 async function postExtractTokens(req, res) {
   const inputText = req.body.sourceText;
-  // console.log(`INPUT TEXT: ${inputText}`);
+  // console.log(`RAPID_API_KEY: ${process.env.RAPID_API_KEY}`);
 
-  const doc = nlp.readDoc(inputText);
-  // 1: Extract words:
-  const words = doc
-    .tokens()
-    .filter((token) => token.out(its.type) === "word")
-    .out(its.lemma);
+  await extractTokens(inputText);
+  await markUpText(inputText);
 
-  words.map((word) => exampleData.words.push(word));
-  console.log(`EXAMPLE DATA: ${JSON.stringify(exampleData)}`);
-
-  // TO DO: --- pending
-  // 2: Discard not real English words/dictionary entries
-
-  console.log(`words: ${words}`);
-  return res.status(200).send(await words);
+  return res.status(200).send(await JSON.stringify(exampleData));
 }
 
 const extractTokens = async function (sourceText) {
   const doc = nlp.readDoc(sourceText);
 
   // 1: Extract words:
-  const words = doc
+  doc
     .tokens()
     .filter((token) => token.out(its.type) === "word")
-    .out(its.lemma);
+    .each((word, index) => {
+      const lemma = word.out(its.lemma);
 
-  // TO DO: --- pending
-  // 2: Discard not real English words/dictionary entries
+      // console.log(`contains: ${posWords.has(lemma)}`);
+      // console.log(`lemma: ${lemma}`);
+      if (!posWords.has(lemma)) {
+        posWords[lemma] = {
+          word: word.out(),
+          lemma: word.out(its.lemma),
+          pos: word.out(its.pos),
+          /* TO DO: word frequency */
+          frecuency: null,
+        };
+        // console.log(`posWords: ${JSON.stringify(posWords)}`);
+      } else {
+        // console.log(`**else**`);
+      }
+    });
+  // console.log(`exampleData: ${JSON.stringify(exampleData.posWords)}`);
+  // console.log(`Example map: ${JSON.stringify(testMap)}`);
 
-  let verbs = await doc
-    .tokens()
-    .filter((token) => token.out(its.type) === "word")
-    .filter((token) => token.out(its.pos) === "VERB")
-    .out();
-
-  let nouns = await doc
-    .tokens()
-    .filter((token) => token.out(its.type) === "word")
-    .filter((word) => word.out(its.pos) === "NOUN")
-    .out();
-
-  console.log(`WORDS: ${words}`);
-  console.log(`VERBS: ${verbs}`);
-  console.log(`NOUNS: ${nouns}`);
+  // console.log(`POS: ${JSON.stringify(exampleData)}`);
 };
 
-async function postMarkUpText(req, res) {
-  const sourceText = req.body.sourceText;
-
-  /* *** EXTRACT TOKENS *** */
-  extractTokens(sourceText);
-
+async function markUpText(sourceText) {
   let doc = nlp.readDoc(sourceText);
 
   // Entities
-  let entities = doc.entities().out(its.detail);
+  // let entities = doc.entities().out(its.detail);
 
   // Counts
-  let sentences = doc.sentences().length();
-  let tokens = doc.tokens().length();
-  let words = doc
-    .tokens()
-    .filter((token) => {
-      return token.out(its.type) === "word";
-    })
-    .length();
+  // let sentences = doc.sentences().length();
+  // let tokens = doc.tokens().length();
+  // let words = doc
+  //   .tokens()
+  //   .filter((token) => {
+  //     return token.out(its.type) === "word";
+  //   })
+  //   .length();
 
   // Tagged text
   let seenEntities = new Set();
@@ -124,18 +114,17 @@ async function postMarkUpText(req, res) {
       sentence: s.out(),
       sentiment: s.out(its.sentiment),
     });
+    exampleData.sentences.push({
+      sentence: s.out(),
+      sentiment: s.out(its.sentiment),
+    });
   });
 
-  // console.log(entities);
-  // console.log(sentiments);
-  // console.log(wordFreq);
-  console.log(doc.out(its.markedUpText));
-
-  res.set("Content-Type", "text/html");
-  return res.status(200).send(doc.out(its.markedUpText));
+  const markedText = doc.out(its.markedUpText);
+  exampleData.nlpGrammar = markedText;
+  return markedText;
 }
 
 module.exports = {
   postExtractTokens,
-  postMarkUpText,
 };

@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-const URL_ENDPOINT = "http://localhost:4000/grammar/nlp/mark-up";
+const URL_ENDPOINT = "http://localhost:4000/grammar/nlp/tokens";
 
 export const getGrammar = createAsyncThunk(
   "grammar/getGrammar",
@@ -15,9 +15,10 @@ export const getGrammar = createAsyncThunk(
         sourceText: `${sourceText}`,
       }),
     })
-      .then((response) => {
-        const text = response.text();
-        return text;
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(`json: ${data}`);
+        return data;
       })
       .catch((err) => console.log(`An error ocurred: ${err}`));
 
@@ -37,7 +38,8 @@ const grammarSlice = createSlice({
   name: "grammar",
   initialState: {
     nlpGrammar: "",
-    tokens: [],
+    posWords: [],
+    sentences: [],
     loadingGrammarStatus: loadingGrammarStatuses.IDDLE,
   },
   reducers: {
@@ -48,7 +50,9 @@ const grammarSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(getGrammar.fulfilled, (state, action) => {
-      state.nlpGrammar = action.payload;
+      state.nlpGrammar = action.payload?.nlpGrammar;
+      state.posWords = action.payload?.posWords;
+      state.sentences = action.payload?.sentences;
       state.loadingGrammarStatus = loadingGrammarStatuses.SUCCEEDED;
     });
   },
