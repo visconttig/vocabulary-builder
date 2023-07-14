@@ -9,8 +9,7 @@ const nlpController = require("./routes/nlp.controller.js");
 
 const app = express();
 require("dotenv").config();
-
-// console.log(process.env);
+const PORT = process.env.PORT || 4000;
 
 let corsOptions = {
   origin: "*",
@@ -33,6 +32,6 @@ app.post("/translations/translate", translationsControler.postTranslate);
 app.post("/grammar/nlp/tokens", nlpController.postExtractTokens);
 app.post("/grammar/nlp/mark-up", nlpController.postMarkUpText);
 
-app.listen(4000, () => {
-  return console.log("App listening on port 4000");
+app.listen(PORT, () => {
+  return console.log(`App listening on port ${PORT}`);
 });

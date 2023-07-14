@@ -1,54 +1,59 @@
 .main-text {
-  color: white;
-  border: 2px solid grey;
+  border: 2px solid rgb(128, 128, 128, 0.6);
 
   font-size: 1.2rem;
   font-style: italic;
   font-weight: 500;
   border-radius: 8px;
-  width: 40vw;
-  // height: 80vh;
-  min-height: 25vh;
-  margin: 1vw;
-  overflow-y: auto;
+  min-width: 40%;
   resize: none;
 
   // to preserve white spaces
   white-space: pre-line;
   text-align: justify;
+
+  padding: 1.4rem;
+  overflow-x: hidden;
+  word-wrap: normal;
 }
 
 textarea {
   background-color: inherit;
 }
 
-body {
-  // background-color: rgb(184, 165, 165);
-  background-color: black;
-}
-
-.translate-button {
+button {
   text-transform: uppercase;
 }
 
 .main-container {
   display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+
+  gap: 2.4rem;
+  margin: 2.4rem 1.2rem;
+
+  width: 95vw;
+  // border: 3px dotted gray;
+}
+
+.translation-views-container {
+  display: flex;
   flex-direction: row;
-  justify-content: space-around;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 }
 
 .translation-field {
   opacity: 0.8;
+
+  background-color: #f5f5f5;
 }
 
 .buttons-container {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  max-width: 40vw;
-  margin: 3vh;
-  gap: 1vw;
+  justify-content: flex-start;
+  gap: 1.2rem;
 }
 
 .placeholder-text {

@@ -13,15 +13,17 @@ const HomePage = () => {
   return (
     <>
       <div className="main-container">
-        <div className="translator-container">
+        <div className="translation-views-container">
+          {/* <div className="translator-container"> */}
           <TranslatorSourceEditor />
+          {/* </div> */}
+          <TranslatorDestinationView />
         </div>
-        <TranslatorDestinationView />
         <GrammarNlpView />
-      </div>
-      <div className="buttons-container">
-        <TranslateButton />
-        <GrammarNlpButton />
+        <div className="buttons-container">
+          <TranslateButton />
+          <GrammarNlpButton />
+        </div>
       </div>
     </>
   );

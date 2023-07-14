@@ -1,6 +1,11 @@
 const express = require("express");
 const winkNLP = require("wink-nlp");
 
+const exampleData = {
+  nlpGrammar: "",
+  words: [],
+};
+
 // load english model
 const model = require("wink-eng-lite-web-model");
 // instantiate winkNLP
@@ -20,6 +25,9 @@ async function postExtractTokens(req, res) {
     .tokens()
     .filter((token) => token.out(its.type) === "word")
     .out(its.lemma);
+
+  words.map((word) => exampleData.words.push(word));
+  console.log(`EXAMPLE DATA: ${JSON.stringify(exampleData)}`);
 
   // TO DO: --- pending
   // 2: Discard not real English words/dictionary entries

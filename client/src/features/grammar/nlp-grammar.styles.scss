@@ -1,11 +1,7 @@
 .nlp-container {
-  width: 80vw;
-  overflow-x: hidden;
-
-  word-wrap: normal;
-  padding: 3vh 3vw;
-
-  border: 5px solid gray;
+  // overflow-x: hidden;
+  // word-wrap: normal;
+  width: 100%;
 }
 
 /* Edit Surface */
@@ -35,12 +31,12 @@
 }
 
 /* Tags in Surface */
+/* base text color */
 span.tag {
   position: relative;
   display: inline;
   padding: 0;
   margin: 0;
-  color: #aab1be;
 }
 
 span.tag::after {
@@ -54,11 +50,6 @@ span.tag::after {
   margin: 0;
   width: 100%;
   color: #4e535c;
-}
-
-// base text
-span.tag {
-  color: rgb(206, 199, 199);
 }
 
 /* Numbers are green */
