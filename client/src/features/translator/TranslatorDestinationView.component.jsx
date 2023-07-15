@@ -5,6 +5,7 @@ import { reactLocalStorage } from "reactjs-localstorage";
 import { setTranslatedText } from "./translatorSlice.js";
 
 import "../../components/home page/homePage.styles.scss";
+import "./translatorDestinationView.styles.scss";
 
 const translationPlaceholderText = "El texto traducido aparecerá aquí";
 

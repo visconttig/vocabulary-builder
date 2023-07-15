@@ -1,0 +1,31 @@
+.grammarly {
+  //
+}
+
+#source-editor {
+  overflow-y: hidden;
+  width: 100% !important;
+  min-height: 100%;
+  margin: 0;
+  border: none;
+}
+
+#source-editor:focus-visible {
+  outline: none;
+  border: 2px solid rgba(238, 5, 95, 0.4);
+  border-radius: 8px;
+}
+
+.main-text:has(#source-editor) {
+  padding: 0;
+  height: auto;
+}
+
+grammarly-editor-plugin {
+  --grammarly-default-font-family: Optima, sans-serif;
+  --grammarly-interactive-color: #e00697;
+  --grammarly-default-border-radius: 30px;
+  --grammarly-card-border-radius: 0px;
+
+  // color-scheme: dark || light;
+}

@@ -1,16 +1,6 @@
 const express = require("express");
 const winkNLP = require("wink-nlp");
 
-let exampleData = {
-  nlpGrammar: "",
-  // posWords: null,
-  posWords: new Map(),
-  sentences: [],
-};
-
-// exampleData.posWords = new Map();
-const posWords = exampleData.posWords;
-
 // load english model
 const model = require("wink-eng-lite-web-model");
 // instantiate winkNLP
@@ -23,16 +13,22 @@ const as = nlp.as;
 async function postExtractTokens(req, res) {
   const inputText = req.body.sourceText;
 
-  const posWords = exampleData.posWords;
-  // console.log(`RAPID_API_KEY: ${process.env.RAPID_API_KEY}`);
+  let exampleData = {
+    nlpGrammar: "",
+    posWords: new Map(),
+    sentences: [],
+  };
 
-  await extractTokens(inputText);
-  await markUpText(inputText);
+  const posWords = exampleData.posWords;
+
+  await extractTokens(inputText, exampleData);
+  await markUpText(inputText, exampleData);
 
   return res.status(200).send(await JSON.stringify(exampleData));
 }
 
-const extractTokens = async function (sourceText) {
+const extractTokens = async function (sourceText, exampleData) {
+  const posWords = exampleData.posWords;
   const doc = nlp.readDoc(sourceText);
 
   // 1: Extract words:
@@ -56,21 +52,8 @@ const extractTokens = async function (sourceText) {
     });
 };
 
-async function markUpText(sourceText) {
+async function markUpText(sourceText, exampleData) {
   let doc = nlp.readDoc(sourceText);
-
-  // Entities
-  // let entities = doc.entities().out(its.detail);
-
-  // Counts
-  // let sentences = doc.sentences().length();
-  // let tokens = doc.tokens().length();
-  // let words = doc
-  //   .tokens()
-  //   .filter((token) => {
-  //     return token.out(its.type) === "word";
-  //   })
-  //   .length();
 
   // Tagged text
   let seenEntities = new Set();

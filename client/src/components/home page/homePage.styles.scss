@@ -1,7 +1,6 @@
 .main-container {
   display: flex;
   flex-direction: column;
-  // justify-content: space-evenly;
   justify-content: flex-start;
   gap: 1.4rem;
   margin: 2.4rem 1.2rem;
@@ -10,10 +9,12 @@
 }
 
 .main-text {
-  border: 2px solid rgb(128, 128, 128, 0.6);
+  border: 2px solid;
+  border-color: rgba(128, 128, 128, 0.4);
   overflow-y: hidden;
 
-  font-size: 1.2rem;
+  /* set font-size for all main-text elements here */
+  font-size: 1rem;
   font-style: italic;
   font-weight: 500;
   border-radius: 8px;
@@ -28,37 +29,9 @@
   overflow-x: hidden;
   word-wrap: normal;
 
-  // background-color: yellow;
-  // border: 3px dashed green;
-  // width: 80%;
   min-height: 10vh;
-}
 
-.main-text:has(#source-editor) {
-  padding: 0;
-  // overflow-y: hidden;
-  background-color: aqua;
-
-  height: auto;
-}
-
-#source-editor {
-  overflow-y: hidden;
-  width: 100%;
-  min-height: 100%;
-  padding: 0;
-  margin: 0;
-  // background-color: black;
-}
-
-grammarly-editor-plugin {
-  --grammarly-default-font-family: Optima, sans-serif;
-  --grammarly-interactive-color: #e00697;
-  --grammarly-default-border-radius: 30px;
-  --grammarly-card-border-radius: 0px;
-
-  // color-scheme: dark;
-  // color-scheme: light;
+  flex-basis: 50%;
 }
 
 button {
@@ -69,8 +42,6 @@ button {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-
-  // height: auto;
 }
 
 .translation-field {

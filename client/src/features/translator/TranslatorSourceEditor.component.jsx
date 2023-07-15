@@ -1,6 +1,7 @@
 import React from "react";
 import { GrammarlyEditorPlugin } from "@grammarly/editor-sdk-react";
 import "../../components/home page/homePage.styles.scss";
+import "./translatorSourceEditor.styles.scss";
 import { reactLocalStorage } from "reactjs-localstorage";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -15,7 +16,6 @@ const TranslatorSourceEditor = () => {
 
   useEffect(() => {
     const sourceText = reactLocalStorage.get("sourceText");
-    console.log(`Config type: ${typeof grammarlyConfig}`);
 
     if (sourceText?.length > 0 && sourceText != undefined) {
       dispatch(setSourceText(sourceText));
