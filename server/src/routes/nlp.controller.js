@@ -1,13 +1,14 @@
 const express = require("express");
 const winkNLP = require("wink-nlp");
 
-const exampleData = {
+let exampleData = {
   nlpGrammar: "",
-  posWords: null,
+  // posWords: null,
+  posWords: new Map(),
   sentences: [],
 };
 
-exampleData.posWords = new Map();
+// exampleData.posWords = new Map();
 const posWords = exampleData.posWords;
 
 // load english model
@@ -21,6 +22,8 @@ const as = nlp.as;
 
 async function postExtractTokens(req, res) {
   const inputText = req.body.sourceText;
+
+  const posWords = exampleData.posWords;
   // console.log(`RAPID_API_KEY: ${process.env.RAPID_API_KEY}`);
 
   await extractTokens(inputText);
@@ -39,8 +42,6 @@ const extractTokens = async function (sourceText) {
     .each((word, index) => {
       const lemma = word.out(its.lemma);
 
-      // console.log(`contains: ${posWords.has(lemma)}`);
-      // console.log(`lemma: ${lemma}`);
       if (!posWords.has(lemma)) {
         posWords[lemma] = {
           word: word.out(),
@@ -49,15 +50,10 @@ const extractTokens = async function (sourceText) {
           /* TO DO: word frequency */
           frecuency: null,
         };
-        // console.log(`posWords: ${JSON.stringify(posWords)}`);
       } else {
-        // console.log(`**else**`);
+        //
       }
     });
-  // console.log(`exampleData: ${JSON.stringify(exampleData.posWords)}`);
-  // console.log(`Example map: ${JSON.stringify(testMap)}`);
-
-  // console.log(`POS: ${JSON.stringify(exampleData)}`);
 };
 
 async function markUpText(sourceText) {

@@ -8,6 +8,7 @@ import TranslatorDestinationView from "../../features/translator/TranslatorDesti
 import TranslateButton from "../buttons/TranslateButton.component.jsx";
 import GrammarNlpButton from "../buttons/GrammarNlpButton.component.jsx";
 import GrammarNlpView from "../../features/grammar/GrammarNlpView.component";
+import VocabularyComponent from "../vocabulary/vocabulary.component.jsx";
 
 const HomePage = () => {
   return (
@@ -20,6 +21,7 @@ const HomePage = () => {
           <TranslatorDestinationView />
         </div>
         <GrammarNlpView />
+        <VocabularyComponent />
         <div className="buttons-container">
           <TranslateButton />
           <GrammarNlpButton />

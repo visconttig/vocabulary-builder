@@ -1,0 +1,19 @@
+.vocabulary-container {
+  min-height: 20vh;
+}
+
+.words-list {
+  list-style-type: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+
+  li {
+    border: 2px solid rgb(128, 128, 128, 0.6);
+    border-radius: 25px;
+    display: inline-block;
+    padding: 3px 1.2rem;
+    margin: 0.3rem 0;
+  }
+}

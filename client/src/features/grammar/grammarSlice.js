@@ -17,7 +17,6 @@ export const getGrammar = createAsyncThunk(
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(`json: ${data}`);
         return data;
       })
       .catch((err) => console.log(`An error ocurred: ${err}`));
@@ -47,16 +46,22 @@ const grammarSlice = createSlice({
       console.log(`SET_NLP: ${action.payload}`);
       state.nlpGrammar = action.payload;
     },
+    resetGrammar: (state) => {
+      state.nlpGrammar = "";
+      state.posWords = [];
+      state.sentences = [];
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getGrammar.fulfilled, (state, action) => {
       state.nlpGrammar = action.payload?.nlpGrammar;
       state.posWords = action.payload?.posWords;
+      // state.posWords = JSON.parse(action.payload?.posWords);
       state.sentences = action.payload?.sentences;
       state.loadingGrammarStatus = loadingGrammarStatuses.SUCCEEDED;
     });
   },
 });
 
-export const { setNlpGrammar } = grammarSlice.actions;
+export const { setNlpGrammar, resetGrammar } = grammarSlice.actions;
 export default grammarSlice.reducer;

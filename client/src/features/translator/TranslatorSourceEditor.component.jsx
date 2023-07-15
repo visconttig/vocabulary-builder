@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setSourceText, setTranslatedText } from "./translatorSlice.js";
 
 import { getGrammar } from "../grammar/grammarSlice.js";
+import { resetGrammar } from "../grammar/grammarSlice.js";
 
 const TranslatorSourceEditor = () => {
   const sourceText = useSelector((store) => store.translator.sourceText);
@@ -14,6 +15,7 @@ const TranslatorSourceEditor = () => {
 
   useEffect(() => {
     const sourceText = reactLocalStorage.get("sourceText");
+    console.log(`Config type: ${typeof grammarlyConfig}`);
 
     if (sourceText?.length > 0 && sourceText != undefined) {
       dispatch(setSourceText(sourceText));
@@ -26,16 +28,26 @@ const TranslatorSourceEditor = () => {
     dispatch(getGrammar(e.target.value));
     // reset translated text
     dispatch(setTranslatedText(""));
+    dispatch(resetGrammar());
   };
 
   return (
-    <GrammarlyEditorPlugin clientId="client_5VsYi16JNi9w5uKzsrXWwH">
+    <GrammarlyEditorPlugin
+      config={{
+        activation: "immediate",
+        underlines: "on",
+        introText: "",
+        suggestionCards: "on",
+      }}
+      clientId="client_5VsYi16JNi9w5uKzsrXWwH"
+      className="grammarly main-text"
+    >
       <textarea
         name="source-text"
-        id=""
-        cols="30"
-        rows="10"
-        className="main-text "
+        id="source-editor"
+        cols="1"
+        rows="1"
+        className=""
         onChange={onHandleChange}
         value={sourceText}
         placeholder="Escribe aquí para recibir sugerencias de corrección y traducir el texto..."
