@@ -1,5 +1,6 @@
 const express = require("express");
 const winkNLP = require("wink-nlp");
+const _ = require("lodash");
 
 // load english model
 const model = require("wink-eng-lite-web-model");
@@ -10,13 +11,18 @@ const its = nlp.its;
 // 'as' reducer to reduce collections
 const as = nlp.as;
 
+const toLowerCase = (text) => {
+  return _.lowerCase(text);
+};
+
 async function postExtractTokens(req, res) {
   const inputText = req.body.sourceText;
 
   let exampleData = {
     nlpGrammar: "",
     posWords: new Map(),
-    sentences: [],
+    // sentences: [],
+    sentences: new Map(),
   };
 
   const posWords = exampleData.posWords;
@@ -86,6 +92,8 @@ async function markUpText(sourceText, exampleData) {
     .out(its.normal, as.freqTable);
   wordFreq = wordFreq.slice(0, 5);
 
+  const sentences = exampleData.sentences;
+
   // Sentiment
   let sentiments = [];
   doc.sentences().each((s) => {
@@ -93,10 +101,17 @@ async function markUpText(sourceText, exampleData) {
       sentence: s.out(),
       sentiment: s.out(its.sentiment),
     });
-    exampleData.sentences.push({
-      sentence: s.out(),
-      sentiment: s.out(its.sentiment),
-    });
+    // exampleData.sentences.push({
+    //   sentence: s.out(),
+    //   sentiment: s.out(its.sentiment),
+    // });
+
+    let lowerCasedSentence = s.out().toLowerCase();
+    if (!sentences.has(lowerCasedSentence)) {
+      sentences[lowerCasedSentence] = {
+        sentence: `${lowerCasedSentence}`,
+      };
+    }
   });
 
   const markedText = doc.out(its.markedUpText);

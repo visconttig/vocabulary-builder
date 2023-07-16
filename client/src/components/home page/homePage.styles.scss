@@ -34,7 +34,7 @@
   flex-basis: 50%;
 }
 
-button {
+button:not(.word-button) {
   text-transform: uppercase;
 }
 

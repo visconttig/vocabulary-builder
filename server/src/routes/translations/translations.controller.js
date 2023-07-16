@@ -3,22 +3,7 @@ const axios = require("axios");
 
 async function postTranslate(req, res) {
   const text = req.body;
-  // console.log(`REQ.BODY: ${JSON.stringify(req.body)}`);
-  // console.log(`RAPID_API_KEY: ${process.env.RAPID_API_KEY}`);
 
-  /* *** DEVELOPMENT/TEST API *** */
-  // res.setHeader("Content-Type", "application/json");
-  // const postId = Math.floor(Math.random() * 10 + 1);
-  // const translationPromise = fetch(
-  //   `https://jsonplaceholder.typicode.com/posts/${postId}`
-  // )
-  //   .then((result) => result.json())
-  //   .then((data) => {
-  //     console.log(`RESULT: ${JSON.stringify(data)}`);
-  //     return res.send(JSON.stringify(data));
-  //   });
-
-  /* *** REAL TRANSLATION CALLS HERE *** */
   const options = {
     method: "POST",
     url: "https://rapid-translate-multi-traduction.p.rapidapi.com/t",
