@@ -32,6 +32,11 @@
   min-height: 10vh;
 
   flex-basis: 50%;
+
+  p {
+    margin: 2.4rem 0;
+    font-size: 1.4rem;
+  }
 }
 
 button:not(.word-button) {

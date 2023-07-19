@@ -85,5 +85,4 @@ const translatorSlice = createSlice({
 });
 
 export const { setSourceText, setTranslatedText } = translatorSlice.actions;
-// TODO: export sourceTextSelector
 export default translatorSlice.reducer;

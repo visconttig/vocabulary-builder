@@ -42,8 +42,8 @@ export const getExplanations = createAsyncThunk(
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(`result: ${JSON.stringify(data.text)}`);
-        return data.text;
+        console.log(`result: ${JSON.stringify(data.explanation)}`);
+        return data.explanation;
       })
       .catch((err) => {
         console.log(`An error ocurred: ${err}`);
@@ -138,6 +138,9 @@ const grammarSlice = createSlice({
     resetCurrentSentenceExplanation: (state) => {
       state.currentSentenceExplanation = null;
     },
+    resetLoadingExplanationsStatus: (state) => {
+      state.loadingExplanationsStatus = loadingHttpStatuses.IDDLE;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getGrammar.fulfilled, (state, action) => {
@@ -170,5 +173,6 @@ export const {
   setCurrentWord,
   setCurrentSentence,
   resetCurrentSentenceExplanation,
+  resetLoadingExplanationsStatus,
 } = grammarSlice.actions;
 export default grammarSlice.reducer;
