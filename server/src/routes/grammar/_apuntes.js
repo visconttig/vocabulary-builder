@@ -1,4 +1,13 @@
 // example response 
+/*
+"scripts": {
+  "client": "npm start --prefix client",
+  "server": "cd ./server & node ./src index.js",
+  // "watch": "cd ./server && nodemon ./src/index.js",
+  "watch": "npm run server & npm run client",
+
+  "test": "echo \"Error: no test specified\" && exit 1"
+},  */
 
 // DATA RECIEVED: the lyon was sad.
 {

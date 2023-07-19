@@ -1,84 +1,87 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import "./vocabulary.styles.scss";
+import { useDispatch } from "react-redux";
 
-import { useEffect } from "react";
+import SentenceDetailsComponent from "../vocabulary/SentenceDetails.component.jsx";
+import { setIsWordDetailsOpen } from "../../features/grammar/grammarSlice.js";
+import { setIsSentenceDetailsOpen } from "../../features/grammar/grammarSlice.js";
+import {
+  setCurrentSentence,
+  setCurrentWord,
+} from "../../features/grammar/grammarSlice.js";
 
 const VocabularyComponent = () => {
   const { posWords } = useSelector((store) => store.grammar);
-
   const { sentences } = useSelector((store) => store.grammar);
-  // console.log(`Sentences length: ${sentences.length}`);
+  const { currentWord, currentSentence } = useSelector(
+    (store) => store.grammar
+  );
 
-  const onClickHandle = (e) => {
-    console.log(`value: ${e.target.value}`);
-    alert(`Click: ${e.target.value}`);
+  const { isWordDetailsOpen, isSentenceDetailsOpen } = useSelector(
+    (store) => store.grammar
+  );
+  const dispatch = useDispatch();
+
+  const onWordClickHandle = (e) => {
+    // open word details component
   };
 
   const onSentenceClickHandle = async (e) => {
-    const response = fetch("http://localhost:4000/grammar/explain", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        sourceText: `${e.target.value}`,
-      }),
-    });
-
-    response
-      .then((response) => response.text())
-      .then((data) => {
-        console.log(`HttpExplainGrammar: ${data}`);
-      })
-      .catch((err) => {
-        throw new Error(err);
-      });
+    // open detailed grammar sentence component
+    await dispatch(setCurrentSentence(e.target.value));
+    dispatch(setIsSentenceDetailsOpen(true));
   };
 
   return (
-    <div className="vocabulary-container main-text">
-      {posWords &&
-        Object.keys(posWords).map((word) => (
-          <button
-            className="word-button"
-            key={word}
-            onClick={(e) => onClickHandle(e)}
-            value={word}
-          >
-            {word}
-          </button>
-        ))}
-
-      {sentences && (
-        <hr
-          style={{
-            width: "80%",
-            color: "blue",
-            margin: "0.8rem",
-            height: "2px",
-          }}
-        />
-      )}
-
-      {sentences &&
-        Object.keys(sentences).map((sentence) => {
-          // console.log(`sentence: ${sentence}`);
-          return (
+    <>
+      <div className="vocabulary-container main-text">
+        {posWords &&
+          Object.keys(posWords).map((word) => (
             <button
-              key={sentence}
-              value={sentence}
-              onClick={(e) => onSentenceClickHandle(e)}
               className="word-button"
-              style={{
-                backgroundColor: "rgba(255, 0,72, 0.43)",
-              }}
+              key={word}
+              onClick={(e) => onWordClickHandle(e)}
+              value={word}
             >
-              {sentence}
+              {word}
             </button>
-          );
-        })}
-    </div>
+          ))}
+
+        {sentences && (
+          <hr
+            style={{
+              width: "98%",
+              color: "blue",
+              margin: "0.8rem",
+              backgroundColor: "gray",
+              height: "5px",
+              opacity: "0.4",
+              borderRadius: "0.8rem",
+            }}
+          />
+        )}
+
+        {sentences &&
+          Object.keys(sentences).map((sentence) => {
+            return (
+              <button
+                key={sentence}
+                value={sentence}
+                onClick={(e) => onSentenceClickHandle(e)}
+                className="word-button"
+                style={{
+                  backgroundColor: "rgba(255, 0,72, 0.43)",
+                }}
+              >
+                {sentence}
+              </button>
+            );
+          })}
+      </div>
+
+      {isSentenceDetailsOpen ? <SentenceDetailsComponent /> : null}
+    </>
   );
 };
 

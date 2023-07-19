@@ -1,18 +1,24 @@
 const express = require("express");
 const axios = require("axios");
+const { result } = require("lodash");
+
+const inDevelopment = process.env.DEVELOPMENT_MODE;
+console.log(`Development mode: ${process.env.DEVELOPMENT_MODE}`);
 
 async function postExplainGrammar(req, res) {
   const sourceText = req.body.sourceText;
-  console.log(`DATA RECIEVED: ${sourceText}`);
+  console.log(`1 -- DATA RECIEVED: ${sourceText}`);
 
-  const response = await fetchGrammarExpls(sourceText);
+  const explanationPromise = fetchGrammarExpls(sourceText);
 
-  res.set("Content-Type", "text/html");
-  return res.status(200).send(response);
+  const result = await explanationPromise;
+  console.log(`3 -- server response: ${result}`);
+  res.set("Content-Type", "application/json");
+  return res.status(200).send(result);
 }
 
 function createGrammarQuery(sourceText) {
-  const grammarQuery = `Por favor, explícame en términos sencillos la gramática de esta frase: '${sourceText}' y adjunta un link a un sitio web con más detalles.`;
+  const grammarQuery = `Por favor, explícame en términos sencillos la gramática de esta frase: '${sourceText}' y adjunta un link a un sitio web en Español con más detalles.`;
 
   return grammarQuery;
 }
@@ -40,13 +46,14 @@ async function fetchGrammarExpls(sourceText) {
 
   fetchGrammarPromise
     .then((response) => {
-      console.log(response.data);
-      // return res.status(200).send(response.data);
-      return response.data;
+      return response.data.ChatGPT;
     })
     .catch((err) => {
-      throw new Error(err);
+      console.log(`An error ocurred: ${err}`);
     });
+
+  const { data } = await fetchGrammarPromise;
+  return data.ChatGPT;
 }
 
 module.exports = {
