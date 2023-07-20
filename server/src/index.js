@@ -31,7 +31,7 @@ app.post("/grammar/explain", grammarController.postExplainGrammar);
 app.post("/grammar/nlp/tokens", nlpController.postExtractTokens);
 
 /* *** spanish-english bilingual dictionary *** */
-app.post("/dictionary/es/:lemma" /* controller here */);
+// app.post("/dictionary/es/:lemma" /* controller here */);
 
 app.listen(PORT, () => {
   return console.log(`App listening on port ${PORT}`);

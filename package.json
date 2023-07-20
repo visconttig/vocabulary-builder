@@ -19,9 +19,6 @@
     "url": "https://github.com/visconttig/vocabulary-builder/issues"
   },
   "homepage": "https://github.com/visconttig/vocabulary-builder#readme",
-  "dependencies": {
-    "lodash": "^4.17.21"
-  },
   "devDependencies": {
     "concurrently": "^8.2.0"
   }
