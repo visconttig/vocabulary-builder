@@ -1,6 +1,6 @@
 import React from "react";
 import { GrammarlyEditorPlugin } from "@grammarly/editor-sdk-react";
-import "../../components/home page/homePage.styles.scss";
+import "../../components/homePage/homePage.styles.scss";
 import "./translatorSourceEditor.styles.scss";
 import { reactLocalStorage } from "reactjs-localstorage";
 import { useEffect } from "react";

@@ -1,5 +1,5 @@
 import React from "react";
-import "../../components/home page/homePage.styles.scss";
+import "../../components/homePage/homePage.styles.scss";
 import "./nlp-grammar.styles.scss";
 import "../translator/translatorSourceEditor.styles.scss";
 
