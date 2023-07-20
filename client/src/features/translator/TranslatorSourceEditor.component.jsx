@@ -26,7 +26,6 @@ const TranslatorSourceEditor = () => {
   const onHandleChange = (e) => {
     dispatch(setSourceText(e.target.value));
     dispatch(getGrammar(e.target.value));
-    // reset translated text
     dispatch(setTranslatedText(""));
     dispatch(resetGrammar());
   };

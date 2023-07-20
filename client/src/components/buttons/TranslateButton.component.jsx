@@ -5,7 +5,7 @@ import {
   translatedText,
 } from "../../features/translator/translatorSlice.js";
 
-const TranslateButton = ({ style }) => {
+const TranslateButton = () => {
   const dispatch = useDispatch();
   const translatedText = useSelector(
     (store) => store.translator.translatedText
@@ -32,7 +32,7 @@ const TranslateButton = ({ style }) => {
   };
 
   return (
-    <button onClick={onClickHandler} style={style} name="translate-button">
+    <button onClick={onClickHandler} name="translate-button">
       TRANSLATE
     </button>
   );
