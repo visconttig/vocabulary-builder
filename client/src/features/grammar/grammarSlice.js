@@ -1,8 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-const GET_GRAMMAR_URL_ENDPOINT = process.env.REACT_APP_GRAMMAR_URL_ENDPOINT;
+const GET_GRAMMAR_URL_ENDPOINT = process.env.REACT_APP_GRAMMAR_NLP_URL_ENDPOINT;
 const GET_EXPLANATIONS_URL_ENDPOINT =
-  process.env.REACT_APP_EXPLANATIONS_URL_ENDPOINT;
+  process.env.REACT_APP_GRAMMAR_EXPLANATIONS_URL_ENDPOINT;
 
 export const getGrammar = createAsyncThunk(
   "grammar/getGrammar",

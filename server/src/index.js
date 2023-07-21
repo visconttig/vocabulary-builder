@@ -22,13 +22,25 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.post("/translations/translate", translationsControler.postTranslate);
 
+app.get("/translations/translate", (req, res) => {
+  res.status(200).send("Method NOT ALLOWED please use POST instead.");
+});
+
 /*    *** NOT ENOUGH QUOTA TO PROCEED*** */
 // app.post("/grammar/explain", grammarController.openAi.controller.js);
 
 /* *** new API *** */
 app.post("/grammar/explain", grammarController.postExplainGrammar);
 
+app.get("/grammar/explain", (req, res) => {
+  res.status(200).send("METHOD not allowed, please use POST instead");
+});
+
 app.post("/grammar/nlp/tokens", nlpController.postExtractTokens);
+
+app.get("/grammar/nlp/tokens", (req, res) => {
+  res.status.send("METHOD not allowed, please use POST instead");
+});
 
 /* *** spanish-english bilingual dictionary *** */
 // app.post("/dictionary/es/:lemma" /* controller here */);

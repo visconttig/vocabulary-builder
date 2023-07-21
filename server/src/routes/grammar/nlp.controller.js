@@ -41,7 +41,7 @@ const extractTokens = async function (sourceText, exampleData) {
   doc
     .tokens()
     .filter((token) => token.out(its.type) === "word")
-    .each((word, index) => {
+    .each((word) => {
       const lemma = word.out(its.lemma);
 
       if (!posWords.has(lemma)) {
