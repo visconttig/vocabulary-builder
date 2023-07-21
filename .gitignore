@@ -1,5 +1,7 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+.vscode
+
 # dependencies
 /node_modules
 node_modules
@@ -7,7 +9,7 @@ node_modules
 /.pnp
 .pnp.js
 
-_apuntes
+_apuntes*
 
 # testing
 /coverage
