@@ -4,7 +4,7 @@ import TranslatorSourceEditor from "../../features/translator/TranslatorSourceEd
 
 import TranslatorDestinationView from "../../features/translator/TranslatorDestinationView.component.jsx";
 import TranslateButton from "../buttons/TranslateButton.component.jsx";
-import GrammarNlpView from "../../features/grammar/GrammarNlpView.component";
+import GrammarNlpView from "../../features/grammar/GrammarNlpView.component.jsx";
 import VocabularyComponent from "../vocabulary/Vocabulary.component.jsx";
 
 const HomePage = () => {

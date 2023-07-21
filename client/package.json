@@ -12,7 +12,8 @@
     "react-scripts": "^5.0.1",
     "reactjs-localstorage": "^1.0.1",
     "sass": "^1.63.6",
-    "yarn": "^1.22.19"
+    "yarn": "^1.22.19",
+    "@babel/plugin-proposal-private-property-in-object": "latest"
   },
   "scripts": {
     "start": "react-scripts start",
