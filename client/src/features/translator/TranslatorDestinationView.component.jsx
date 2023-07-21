@@ -17,13 +17,13 @@ const TranslatorDestinationView = () => {
 
   useEffect(() => {
     const translatedText = reactLocalStorage.get("translatedText");
-    if (translatedText?.length > 0 && translatedText != "undefined") {
+    if (translatedText?.length > 0 && translatedText !== "undefined") {
       dispatch(setTranslatedText(translatedText));
     }
   }, []);
 
   const isTranslated =
-    translatedText?.length > 0 && translatedText != "undefined";
+    translatedText?.length > 0 && translatedText !== "undefined";
 
   return (
     <>

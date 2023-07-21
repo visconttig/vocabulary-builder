@@ -1,18 +1,10 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  translateText,
-  translatedText,
-} from "../../features/translator/translatorSlice.js";
+import { translateText } from "../../features/translator/translatorSlice.js";
 
 const TranslateButton = () => {
   const dispatch = useDispatch();
-  const translatedText = useSelector(
-    (store) => store.translator.translatedText
-  );
-  const translationStatus = useSelector(
-    (store) => store.translator.loadingTranslation
-  );
+
   const toTranslateText = useSelector((store) => store.translator.sourceText);
   const sourceLanguage = useSelector(
     (store) => store.translator.sourceLanguage

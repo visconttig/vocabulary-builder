@@ -11,9 +11,7 @@ const VocabularyComponent = () => {
   const { posWords } = useSelector((store) => store.grammar);
   const { sentences } = useSelector((store) => store.grammar);
 
-  const { isWordDetailsOpen, isSentenceDetailsOpen } = useSelector(
-    (store) => store.grammar
-  );
+  const { isSentenceDetailsOpen } = useSelector((store) => store.grammar);
   const dispatch = useDispatch();
 
   const onWordClickHandle = (e) => {
