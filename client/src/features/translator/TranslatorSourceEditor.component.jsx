@@ -17,11 +17,11 @@ const TranslatorSourceEditor = () => {
   useEffect(() => {
     const sourceText = reactLocalStorage.get("sourceText");
 
-    if (sourceText?.length > 0 && sourceText != undefined) {
+    if (sourceText?.length > 0 && sourceText !== undefined) {
       dispatch(setSourceText(sourceText));
       dispatch(getGrammar(sourceText));
     }
-  }, []);
+  }, [dispatch]);
 
   const onHandleChange = (e) => {
     dispatch(setSourceText(e.target.value));

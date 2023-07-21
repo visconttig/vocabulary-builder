@@ -2,7 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { reactLocalStorage } from "reactjs-localstorage";
 
-const URL_ENDPOINT = "http://localhost:4000/translations/translate";
+// const URL_ENDPOINT = "http://localhost:4000/translations/translate";
+const URL_ENDPOINT = process.env.REACT_APP_TRANSLATIONS_URL_ENDPOINT;
 
 export const translateText = createAsyncThunk(
   "translator/translateText",

@@ -46,7 +46,9 @@ button:not(.word-button) {
 .translation-views-container {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
   flex-wrap: nowrap;
+  gap: 1.8rem;
 }
 
 .translation-field {

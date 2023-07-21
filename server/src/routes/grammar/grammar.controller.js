@@ -2,8 +2,7 @@ const express = require("express");
 const axios = require("axios");
 const { result } = require("lodash");
 
-const inDevelopment = process.env.DEVELOPMENT_MODE;
-console.log(`Development mode: ${process.env.DEVELOPMENT_MODE}`);
+console.log(`Development mode: ${process.env.NODE_ENV}`);
 
 async function postExplainGrammar(req, res) {
   const sourceText = req.body.sourceText;

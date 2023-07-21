@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "client": "npm start --prefix client",
-    "server": "cd ./server && nodemon ./src/index.js",
+    "client": "cd ./client && SET NODE_ENV=development && npm start",
+    "server": "cd ./server && SET NODE_ENV=development && nodemon ./src/index.js",
     "watch": "concurrently --kill-others --raw \"npm run server\" \"npm run client\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

@@ -4,19 +4,12 @@ import "./vocabulary.styles.scss";
 import { useDispatch } from "react-redux";
 
 import SentenceDetailsComponent from "../vocabulary/SentenceDetails.component.jsx";
-import { setIsWordDetailsOpen } from "../../features/grammar/grammarSlice.js";
 import { setIsSentenceDetailsOpen } from "../../features/grammar/grammarSlice.js";
-import {
-  setCurrentSentence,
-  setCurrentWord,
-} from "../../features/grammar/grammarSlice.js";
+import { setCurrentSentence } from "../../features/grammar/grammarSlice.js";
 
 const VocabularyComponent = () => {
   const { posWords } = useSelector((store) => store.grammar);
   const { sentences } = useSelector((store) => store.grammar);
-  const { currentWord, currentSentence } = useSelector(
-    (store) => store.grammar
-  );
 
   const { isWordDetailsOpen, isSentenceDetailsOpen } = useSelector(
     (store) => store.grammar

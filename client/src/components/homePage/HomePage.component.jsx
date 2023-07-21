@@ -12,9 +12,7 @@ const HomePage = () => {
     <>
       <div className="main-container">
         <div className="translation-views-container">
-          {/* <div className="translator-container"> */}
           <TranslatorSourceEditor />
-          {/* </div> */}
           <TranslatorDestinationView />
         </div>
         <GrammarNlpView />

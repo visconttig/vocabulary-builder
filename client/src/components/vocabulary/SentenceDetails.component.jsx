@@ -1,10 +1,7 @@
 import React from "react";
 import "./sentenceDetails.styles.scss";
 
-import {
-  getExplanations,
-  setIsWordDetailsOpen,
-} from "../../features/grammar/grammarSlice.js";
+import { getExplanations } from "../../features/grammar/grammarSlice.js";
 import { setIsSentenceDetailsOpen } from "../../features/grammar/grammarSlice.js";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
@@ -17,9 +14,7 @@ import {
 import { loadingHttpStatuses } from "../../features/grammar/grammarSlice.js";
 
 const SentenceDetailsComponent = () => {
-  const { isWordDetailsOpen, isSentenceDetailsOpen } = useSelector(
-    (store) => store.grammar
-  );
+  const { isSentenceDetailsOpen } = useSelector((store) => store.grammar);
   const { currentSentence } = useSelector((store) => store.grammar);
   const { loadingExplanationsStatus } = useSelector((store) => store.grammar);
   const { currentSentenceExplanation } = useSelector((store) => store.grammar);
