@@ -1,5 +1,5 @@
 .grammarly {
-  //
+  padding: 0;
 }
 
 #source-editor {
@@ -8,6 +8,12 @@
   min-height: 100%;
   margin: 0;
   border: none;
+}
+
+textarea#source-editor {
+  resize: none !important;
+  height: 100%;
+  width: 100%;
 }
 
 #source-editor:focus-visible {
