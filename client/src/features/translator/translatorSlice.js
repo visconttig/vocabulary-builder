@@ -79,7 +79,7 @@ const translatorSlice = createSlice({
       builder.addCase(translateText.rejected, (state, action) => {
         state.error = action.error;
         state.loadingTranslation = loadingTranslationStatuses.FAILED;
-        console.log(`ERROR: ${action.error}`);
+        // console.log(`ERROR: ${action.error}`);
       })
     );
   },

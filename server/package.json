@@ -21,5 +21,9 @@
   },
   "engines": {
     "node": "18.16.0"
+  },
+  "devDependencies": {
+    "debug": "^4.3.4",
+    "supports-color": "^9.4.0"
   }
 }

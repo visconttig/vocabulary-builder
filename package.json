@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "client": "cd ./client && SET NODE_ENV=development && npm start",
-    "server": "cd ./server && SET NODE_ENV=development && nodemon ./src/index.js",
+    "server": "SET DEBUG=* && SET DEBUG_COLOR=TRUE && nodemon ./server/index.js",
     "watch": "concurrently --kill-others --raw \"npm run server\" \"npm run client\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -20,7 +20,10 @@
   },
   "homepage": "https://github.com/visconttig/vocabulary-builder#readme",
   "devDependencies": {
-    "concurrently": "^8.2.0"
+    "concurrently": "^8.2.0",
+    "debug": "^4.3.4",
+    "eslint-plugin-functional": "^5.0.8",
+    "supports-color": "^9.4.0"
   },
   "dependencies": {
     "react-scripts": "^5.0.1"

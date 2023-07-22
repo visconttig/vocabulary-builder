@@ -29,7 +29,7 @@ async function postExplainGrammar(req, res) {
     temperature: 0,
   });
 
-  console.log(`RESPONSE: ${response}`);
+  // console.log(`RESPONSE: ${response}`);
   response
     .then((data) => {
       return res.status(200).send(data);

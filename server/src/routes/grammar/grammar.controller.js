@@ -1,17 +1,20 @@
 const express = require("express");
 const axios = require("axios");
 const { result } = require("lodash");
-
-console.log(`Development mode: ${process.env.NODE_ENV}`);
+const debug = require("debug")("http");
 
 async function postExplainGrammar(req, res) {
   const sourceText = req.body.sourceText;
-  console.log(`1 -- DATA RECIEVED: ${sourceText}`);
 
+  if (!sourceText) {
+    return res.status(400).send("The request should not be empty.");
+  }
+
+  debug("%j", `1. Recieved request: ${sourceText}`);
   const explanationPromise = fetchGrammarExpls(sourceText);
 
   const result = await explanationPromise;
-  console.log(`3 -- server response: ${result}`);
+  debug("%j", `3. Server response: ${result}`);
   res.set("Content-Type", "application/json");
   return res.status(200).send(result);
 }
@@ -27,6 +30,11 @@ async function fetchGrammarExpls(sourceText) {
   const rapidApiHost = "open-ai21.p.rapidapi.com";
 
   const grammarQuery = createGrammarQuery(sourceText);
+
+  console.log(`RapidApi Key: ${process.env.RAPID_API_KEY}`);
+  if (!process.env.RAPID_API_KEY) {
+    return "Not API Key provided.";
+  }
 
   const options = {
     method: "POST",

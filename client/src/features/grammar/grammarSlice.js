@@ -1,8 +1,18 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
+import debug from "debug";
+
 const GET_GRAMMAR_URL_ENDPOINT = process.env.REACT_APP_GRAMMAR_NLP_URL_ENDPOINT;
 const GET_EXPLANATIONS_URL_ENDPOINT =
   process.env.REACT_APP_GRAMMAR_EXPLANATIONS_URL_ENDPOINT;
+
+debug(
+  "%j",
+  `Explanations URL: ${process.env.REACT_APP_GRAMMAR_EXPLANATIONS_URL_ENDPOINT}`
+);
+console.log(
+  `Explanations URL_2: ${process.env.REACT_APP_GRAMMAR_EXPLANATIONS_URL_ENDPOINT}`
+);
 
 export const getGrammar = createAsyncThunk(
   "grammar/getGrammar",
@@ -41,15 +51,14 @@ export const getExplanations = createAsyncThunk(
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(`result: ${JSON.stringify(data.explanation)}`);
+        debug("%O", data.explanation);
         return data.explanation;
       })
       .catch((err) => {
         console.log(`An error ocurred: ${err}`);
       });
 
-    // const result = await getExplanationsPromise;
-    // return result;
+    debug(getExplanationsPromise);
 
     const result = await getExplanationsPromise;
     return result;
@@ -145,14 +154,13 @@ const grammarSlice = createSlice({
     builder.addCase(getGrammar.fulfilled, (state, action) => {
       state.nlpGrammar = action.payload?.nlpGrammar;
       state.posWords = action.payload?.posWords;
-      // state.posWords = JSON.parse(action.payload?.posWords);
       state.sentences = action.payload?.sentences;
       state.loadingGrammarStatus = loadingHttpStatuses.SUCCEEDED;
     });
     builder.addCase(getExplanations.fulfilled, (state, action) => {
       state.currentSentenceExplanation = action.payload;
       state.loadingExplanationsStatus = loadingHttpStatuses.SUCCEEDED;
-      console.log(`GET_EXPLANATIONS FULFILLED: ${action.payload}`);
+      `GET_EXPLANATIONS FULFILLED: ${action.payload}`;
     });
     builder.addCase(getExplanations.pending, (state, action) => {
       state.loadingExplanationsStatus = loadingHttpStatuses.PENDING;
