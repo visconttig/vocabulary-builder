@@ -1,20 +1,45 @@
 const express = require("express");
 const axios = require("axios");
-const { result } = require("lodash");
+const {result} = require("lodash");
 const debug = require("debug")("http");
+const flatted = require("flatted");
+
+const GRAMMAR_EXPLANATIONS_ENDPOINT = "https://api.jsonserver.io";
 
 async function postExplainGrammar(req, res) {
   const sourceText = req.body.sourceText;
+  // debug("%j", "Data recieved ", req.body);
 
   if (!sourceText) {
-    return res.status(400).send("The request should not be empty.");
+    return res.status(200).send({Error: "The request should not be empty."});
   }
 
-  debug("%j", `1. Recieved request: ${sourceText}`);
-  const explanationPromise = fetchGrammarExpls(sourceText);
+  // Development API call:
+  const jsonServerSchema = {
+    "id": "crypt.uuid",
+    "explanation": "text.paragraph(3)"
+  };
 
-  const result = await explanationPromise;
-  debug("%j", `3. Server response: ${result}`);
+  const options = {
+    method: "POST",
+    url: GRAMMAR_EXPLANATIONS_ENDPOINT,
+    headers: {
+      "Content-Type": "application/json",
+      "X-Jsio-Token": `${process.env.JSON_SERVER_API_KEY}`
+    },
+    data: JSON.stringify({jsonServerSchema})
+  };
+
+  const getExplanationsPromise = axios
+    .request(options)
+    .then((response) => {
+      // debug("%s", "********SERVER RESPONSE************");
+      // debug("%j", response.data.jsonServerSchema);
+      return response.data.jsonServerSchema.explanation;
+    })
+    .catch((err) => console.log(`(1) An error ocurred: ${err}`));
+
+  const result = await getExplanationsPromise;
   res.set("Content-Type", "application/json");
   return res.status(200).send(result);
 }
@@ -25,7 +50,8 @@ function createGrammarQuery(sourceText) {
   return grammarQuery;
 }
 
-async function fetchGrammarExpls(sourceText) {
+// Production API call
+async function fetchProdGrammarExpls(sourceText) {
   const API_ENDPOINT = "https://open-ai21.p.rapidapi.com/chat";
   const rapidApiHost = "open-ai21.p.rapidapi.com";
 
@@ -42,11 +68,11 @@ async function fetchGrammarExpls(sourceText) {
     headers: {
       "Content-Type": "application/json",
       "X-RapidAPI-Key": `${process.env.RAPID_API_KEY}`,
-      "X-RapidAPI-Host": rapidApiHost,
+      "X-RapidAPI-Host": rapidApiHost
     },
     data: {
-      message: grammarQuery,
-    },
+      message: grammarQuery
+    }
   };
 
   const fetchGrammarPromise = axios.request(options);
@@ -59,10 +85,10 @@ async function fetchGrammarExpls(sourceText) {
       console.log(`An error ocurred: ${err}`);
     });
 
-  const { data } = await fetchGrammarPromise;
+  const {data} = await fetchGrammarPromise;
   return data.ChatGPT;
 }
 
 module.exports = {
-  postExplainGrammar,
+  postExplainGrammar
 };

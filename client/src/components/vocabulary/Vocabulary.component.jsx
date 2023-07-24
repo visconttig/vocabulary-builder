@@ -1,17 +1,17 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import {useSelector} from "react-redux";
 import "./vocabulary.styles.scss";
-import { useDispatch } from "react-redux";
+import {useDispatch} from "react-redux";
 
 import SentenceDetailsComponent from "../vocabulary/SentenceDetails.component.jsx";
-import { setIsSentenceDetailsOpen } from "../../features/grammar/grammarSlice.js";
-import { setCurrentSentence } from "../../features/grammar/grammarSlice.js";
+import {setIsSentenceDetailsOpen} from "../../features/grammar/grammarSlice.js";
+import {setCurrentSentence} from "../../features/grammar/grammarSlice.js";
 
 const VocabularyComponent = () => {
-  const { posWords } = useSelector((store) => store.grammar);
-  const { sentences } = useSelector((store) => store.grammar);
+  const {posWords} = useSelector((store) => store.grammar);
+  const {sentences} = useSelector((store) => store.grammar);
 
-  const { isSentenceDetailsOpen } = useSelector((store) => store.grammar);
+  const {isSentenceDetailsOpen} = useSelector((store) => store.grammar);
   const dispatch = useDispatch();
 
   const onWordClickHandle = (e) => {
@@ -20,7 +20,7 @@ const VocabularyComponent = () => {
 
   const onSentenceClickHandle = async (e) => {
     // open detailed grammar sentence component
-    await dispatch(setCurrentSentence(e.target.value));
+    dispatch(setCurrentSentence(e.target.value));
     dispatch(setIsSentenceDetailsOpen(true));
   };
 
@@ -48,7 +48,7 @@ const VocabularyComponent = () => {
               backgroundColor: "gray",
               height: "5px",
               opacity: "0.4",
-              borderRadius: "0.8rem",
+              borderRadius: "0.8rem"
             }}
           />
         )}
@@ -62,7 +62,7 @@ const VocabularyComponent = () => {
                 onClick={(e) => onSentenceClickHandle(e)}
                 className="word-button"
                 style={{
-                  backgroundColor: "rgba(255, 0,72, 0.43)",
+                  backgroundColor: "rgba(255, 0,72, 0.43)"
                 }}
               >
                 {sentence}

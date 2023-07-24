@@ -1,5 +1,6 @@
 const express = require("express");
 const axios = require("axios");
+const debug = require("debug");
 
 async function postTranslate(req, res) {
   const text = req.body;
@@ -21,7 +22,9 @@ async function postTranslate(req, res) {
 
   try {
     const response = await axios.request(options);
-    // console.log(`RESULT: ${response.data[0]}`);
+    // console.log(`RESULT: ${response.data[0]}`)
+    debug("%j", "Result: ", response.data[0]);
+
     return res.status(200).send(response.data);
   } catch (error) {
     console.error(error);

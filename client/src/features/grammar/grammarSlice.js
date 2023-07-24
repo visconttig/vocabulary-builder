@@ -1,109 +1,57 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-
+import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
 import debug from "debug";
 
-const GET_GRAMMAR_URL_ENDPOINT = process.env.REACT_APP_GRAMMAR_NLP_URL_ENDPOINT;
-const GET_EXPLANATIONS_URL_ENDPOINT =
-  process.env.REACT_APP_GRAMMAR_EXPLANATIONS_URL_ENDPOINT;
+const GET_NLP_URL_ENDPOINT = "http://localhost:4000/grammar/nlp/tokens";
+const EXPLANATIONS_URL = "http://localhost:4000/grammar/explain";
 
-debug(
-  "%j",
-  `Explanations URL: ${process.env.REACT_APP_GRAMMAR_EXPLANATIONS_URL_ENDPOINT}`
-);
-console.log(
-  `Explanations URL_2: ${process.env.REACT_APP_GRAMMAR_EXPLANATIONS_URL_ENDPOINT}`
-);
-
-export const getGrammar = createAsyncThunk(
-  "grammar/getGrammar",
-  async (sourceText) => {
-    const grammarPromise = fetch(GET_GRAMMAR_URL_ENDPOINT, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "With-Credentials": true,
-      },
-      body: JSON.stringify({
-        sourceText: `${sourceText}`,
-      }),
+export const getGrammar = createAsyncThunk("grammar/getGrammar", async (sourceText) => {
+  const grammarPromise = fetch(GET_NLP_URL_ENDPOINT, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "With-Credentials": true
+    },
+    body: JSON.stringify({
+      sourceText: `${sourceText}`
     })
-      .then((response) => response.json())
-      .then((data) => {
-        return data;
-      })
-      .catch((err) => console.log(`An error ocurred: ${err}`));
-
-    const result = await grammarPromise;
-    return result;
-  }
-);
-
-/* ========== TEST API CALL ========================== */
-export const getExplanations = createAsyncThunk(
-  "grammar/getExplanations",
-  async (sourceText) => {
-    const getExplanationsPromise = fetch(GET_EXPLANATIONS_URL_ENDPOINT, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "X-Jsio-Token": "c4eeca51d46fd9afd0df43d3434d3c8e",
-      },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      return data;
     })
-      .then((response) => response.json())
-      .then((data) => {
-        debug("%O", data.explanation);
-        return data.explanation;
-      })
-      .catch((err) => {
-        console.log(`An error ocurred: ${err}`);
-      });
+    .catch((err) => console.log(`An error ocurred: ${err.message}`));
 
-    debug(getExplanationsPromise);
+  const result = await grammarPromise;
+  return result;
+});
 
-    const result = await getExplanationsPromise;
-    return result;
-  }
-);
-
-/* ******************** REAL API CALL ******************
-export const getExplanations = createAsyncThunk(
-  "grammar/getExplanations",
-  async (sourceText) => {
-    const getExplanationsPromise = fetch(GET_EXPLANATIONS_URL_ENDPOINT, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        //
-      },
-      body: JSON.stringify({
-        sourceText: `${sourceText}`,
-      }),
+export const getExplanations = createAsyncThunk("grammar/getExplanations", async (sourceText) => {
+  const getExplanationsPromise = fetch(EXPLANATIONS_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      sourceText: `${sourceText}`
+    })
+  })
+    .then((response) => response.text())
+    .then((data) => {
+      return data;
+    })
+    .catch((err) => {
+      console.log(`An error ocurred: ${err}`);
     });
 
-    getExplanationsPromise
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(`result: ${JSON.stringify(data)}`);
-
-        return data;
-      })
-      .catch((err) => {
-        console.log(`An error ocurred: ${err}`);
-      });
-
-    const result = await getExplanationsPromise;
-    return result;
-  }
-);
-
-
-********************************* */
+  const result = await getExplanationsPromise;
+  return result;
+});
 
 export const loadingHttpStatuses = {
   IDDLE: "iddle",
   PENDING: "pending",
   SUCCEEDED: "succeeded",
-  REJECTED: "failed",
+  REJECTED: "failed"
 };
 
 const grammarSlice = createSlice({
@@ -119,7 +67,7 @@ const grammarSlice = createSlice({
     currentSentence: null,
     currentSentenceExplanation: null,
     currentWord: null,
-    error: null,
+    error: null
   },
   reducers: {
     setNlpGrammar: (state, action) => {
@@ -148,7 +96,7 @@ const grammarSlice = createSlice({
     },
     resetLoadingExplanationsStatus: (state) => {
       state.loadingExplanationsStatus = loadingHttpStatuses.IDDLE;
-    },
+    }
   },
   extraReducers: (builder) => {
     builder.addCase(getGrammar.fulfilled, (state, action) => {
@@ -158,9 +106,8 @@ const grammarSlice = createSlice({
       state.loadingGrammarStatus = loadingHttpStatuses.SUCCEEDED;
     });
     builder.addCase(getExplanations.fulfilled, (state, action) => {
-      state.currentSentenceExplanation = action.payload;
       state.loadingExplanationsStatus = loadingHttpStatuses.SUCCEEDED;
-      `GET_EXPLANATIONS FULFILLED: ${action.payload}`;
+      state.currentSentenceExplanation = action.payload;
     });
     builder.addCase(getExplanations.pending, (state, action) => {
       state.loadingExplanationsStatus = loadingHttpStatuses.PENDING;
@@ -169,7 +116,7 @@ const grammarSlice = createSlice({
       state.loadingExplanationsStatus = loadingHttpStatuses.REJECTED;
       state.error = action.error.message;
     });
-  },
+  }
 });
 
 export const {
@@ -180,6 +127,6 @@ export const {
   setCurrentWord,
   setCurrentSentence,
   resetCurrentSentenceExplanation,
-  resetLoadingExplanationsStatus,
+  resetLoadingExplanationsStatus
 } = grammarSlice.actions;
 export default grammarSlice.reducer;

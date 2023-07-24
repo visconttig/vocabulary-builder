@@ -3,22 +3,20 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "latest",
     "@grammarly/editor-sdk-react": "^2.5.1",
     "@reduxjs/toolkit": "^1.9.5",
-    "latest": "^0.2.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.1.1",
     "react-scripts": "^5.0.1",
     "reactjs-localstorage": "^1.0.1",
-    "sass": "^1.63.6",
-    "yarn": "^1.22.19",
-    "@babel/plugin-proposal-private-property-in-object": "latest"
+    "sass": "^1.63.6"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "build": "react-dotenv && react-scripts build",
+    "test": "react-dotenv && react-scripts test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -40,6 +38,14 @@
     ]
   },
   "devDependencies": {
-    "@redux-devtools/extension": "^3.2.5"
+    "@redux-devtools/extension": "^3.2.5",
+    "debug": "^4.3.4",
+    "eslint-plugin-functional": "^5.0.8"
+  },
+  "react-dotenv": {
+    "whitelist": [
+      "REACT_APP_GRAMMAR_NLP_URL_ENDPOINT",
+      "REACT_APP_GRAMMAR_EXPLANATIONS_URL_ENDPOINT"
+    ]
   }
 }

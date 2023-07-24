@@ -8,28 +8,19 @@ const translationsControler = require("./src/routes/translations/translations.co
 const nlpController = require("./src/routes/grammar/nlp.controller.js");
 const grammarController = require("./src/routes/grammar/grammar.controller.js");
 
-const enviroment = process.env.NODE_ENV || "development";
-
+const enviroment = process.env.NODE_ENV || "production";
 const app = express();
-require("dotenv").config({
+const env_vars = require("dotenv").config({
   path: path.join(__dirname, `.env.${enviroment}`),
-  debug: true,
+  debug: true
 });
-const PORT = process.env.PORT || 4000;
 
-switch (enviroment) {
-  case "development":
-    console.log(`Rapid API key:`, debug(process.env.RAPID_API_KEY));
-    debug("console", "Development mode...");
-    break;
-  case "production":
-    //
-    console.log(`Production mode...`);
-    break;
-  default:
-    console.log(`Default...`);
-    process.env.NODE_ENV = "production";
-}
+console.log("*****\n******\n******");
+console.log(`WORKING MODE: ${process.env.NODE_ENV}`);
+enviroment !== "production" ? console.log(env_vars) : null;
+console.log("***\n******\n*****");
+
+const PORT = process.env.PORT || 4000;
 
 const customLogger = (req, res, next) => {
   debug("%O", req.body);
@@ -42,13 +33,13 @@ const customLogger = (req, res, next) => {
 
 let corsOptions = {
   origin: "*",
-  withCredentials: true,
+  withCredentials: true
 };
 
 app.use(cors(corsOptions));
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({extended: true}));
 process.env.NODE_ENV !== "production" ? app.use(customLogger) : null;
 
 app.post("/translations/translate", translationsControler.postTranslate);
@@ -58,7 +49,7 @@ app.get("/translations/translate", (req, res) => {
 });
 
 /*    *** NOT ENOUGH QUOTA TO PROCEED*** */
-// app.post("/grammar/explain", grammarController.openAi.controller.js);
+// app.post("/grammar/ai/explain", grammarController.openAi.controller.js);
 
 /* *** new API *** */
 app.post("/grammar/explain", grammarController.postExplainGrammar);

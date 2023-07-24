@@ -20,7 +20,7 @@ const TranslatorDestinationView = () => {
     if (translatedText?.length > 0 && translatedText !== "undefined") {
       dispatch(setTranslatedText(translatedText));
     }
-  }, []);
+  }, [dispatch]);
 
   const isTranslated =
     translatedText?.length > 0 && translatedText !== "undefined";

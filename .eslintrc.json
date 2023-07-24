@@ -1,0 +1,13 @@
+{
+  "plugins": ["functional", "promise"],
+  "rules": {
+    "functional/rule-name": "error"
+  },
+  "extends": [
+    "plugin:functional/no-mutations",
+    "plugin:functional/strict",
+    "plugin:functional/no-mutations",
+    "plugin:functional/no-statements",
+    "plugin:promise/recommended"
+  ]
+}
