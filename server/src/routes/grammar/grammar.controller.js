@@ -1,8 +1,6 @@
 const express = require("express");
 const axios = require("axios");
-const {result} = require("lodash");
 const debug = require("debug")("http");
-const flatted = require("flatted");
 
 const GRAMMAR_EXPLANATIONS_ENDPOINT = "https://api.jsonserver.io";
 
@@ -15,12 +13,13 @@ async function postExplainGrammar(req, res) {
   }
 
   const result = await fetchProdGrammarExpls(sourceText);
-  res.set("Content-Type", "application/json");
+  // res.set("Content-Type", "application/json");
+  res.set("Content-Type", "text/html");
   return res.status(200).send(result);
 }
 
 function createGrammarQuery(sourceText) {
-  const grammarQuery = `Por favor, explícame en términos sencillos la gramática de esta frase: '${sourceText}' y adjunta un link a un sitio web en Español con más detalles.`;
+  const grammarQuery = `Por favor, explícame en términos sencillos la gramática de esta frase: '${sourceText}' y adjunta un hiper-link a un sitio web en Español que trate la gramática en uso. Por último, dime algo que me inspire a continuar estudiando y aprendiendo Inglés aunque sea difícil para mi o no tenga fé en mi capacidad.`;
 
   return grammarQuery;
 }
@@ -61,6 +60,7 @@ async function fetchProdGrammarExpls(sourceText) {
     });
 
   const {data} = await fetchGrammarPromise;
+  debug("%j", data);
   return data.ChatGPT;
 }
 
