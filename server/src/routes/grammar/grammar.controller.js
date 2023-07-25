@@ -21,14 +21,6 @@ async function postExplainGrammar(req, res) {
 function createGrammarQuery(sourceText) {
   const grammarQuery = `Por favor, explícame en términos sencillos la gramática de esta frase: '${sourceText}'`;
 
-  /*
-  con un link a un sitio web en Español que trate la gramática de Inglés en uso.
-  */
-
-  /*
-  Por último, dime algo que me inspire a continuar estudiando y aprendiendo Inglés aunque sea difícil para mi o no tenga fé en mi capacidad. 
-  */
-
   return grammarQuery;
 }
 

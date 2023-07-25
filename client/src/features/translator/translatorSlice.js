@@ -1,9 +1,13 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import {reactLocalStorage} from "reactjs-localstorage";
-import debug from "debug";
 
-const TRANSLATIONS_URL = "http://localhost:4000/translations/translate";
+const TRANSLATIONS_URL = process.env.REACT_APP_ENVIROMENT !== "production" ? (
+  "http://localhost:4000/translations/translate"
+) : (
+  "https://vocabulary-builder-server.onrender.com/translations/translate"
+);
+
 
 export const translateText = createAsyncThunk("translator/translateText", async ({sourceLanguage, targetLanguage, toTranslateText}) => {
   const response = fetch(TRANSLATIONS_URL, {

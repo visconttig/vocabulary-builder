@@ -39,6 +39,8 @@
   },
   "devDependencies": {
     "@redux-devtools/extension": "^3.2.5",
+    "concurrently": "^8.2.0",
+    "cross-env": "^7.0.3",
     "debug": "^4.3.4",
     "eslint-plugin-functional": "^5.0.8"
   },

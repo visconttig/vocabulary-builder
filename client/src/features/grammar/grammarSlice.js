@@ -1,11 +1,23 @@
 import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
-import debug from "debug";
 
-const GET_NLP_URL_ENDPOINT = "http://localhost:4000/grammar/nlp/tokens";
-const EXPLANATIONS_URL = "http://localhost:4000/grammar/explain";
+
+
+const EXPLANATIONS_URL = process.env.REACT_APP_ENVIROMENT !== "production" ? (
+  "http://localhost:4000/grammar/explain"
+) : (
+  "https://vocabulary-builder-server.onrender.com/grammar/explain" 
+);
+
+const NLP_URL = process.env.REACT_APP_ENVIROMENT !== 'production' ? (
+  "http://localhost:4000/grammar/nlp/tokens"
+) : (
+  "https://vocabulary-builder-server.onrender.com/grammar/nlp/tokens"
+);
+
+
 
 export const getGrammar = createAsyncThunk("grammar/getGrammar", async (sourceText) => {
-  const grammarPromise = fetch(GET_NLP_URL_ENDPOINT, {
+  const grammarPromise = fetch(NLP_URL, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

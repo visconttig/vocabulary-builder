@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "client": "cd ./client && npm start",
-    "server": "cross-env DEBUG=http NODE_ENV=development nodemon ./server/index.js",
+    "client": "cd ./client && cross-env REACT_APP_ENVIROMENT='production' npm start",
+    "server": "cross-env DEBUG=http NODE_ENV='development' nodemon ./server/index.js",
     "watch": "concurrently --kill-others --raw \"npm run server\" \"npm run client\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

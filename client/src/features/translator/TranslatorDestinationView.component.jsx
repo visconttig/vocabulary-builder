@@ -29,10 +29,13 @@ const TranslatorDestinationView = () => {
     <>
       <div
         className={`translation-field main-text ${
-          isTranslated > 0 ? null : "placeholder-text"
+          isTranslated > 0 ? ( null ) : ( "placeholder-text" )
         }`}
       >
-        {isTranslated ? translatedText : translationPlaceholderText}
+        {isTranslated ? (
+          translatedText 
+          ) : 
+        (translationPlaceholderText)}
       </div>
     </>
   );
