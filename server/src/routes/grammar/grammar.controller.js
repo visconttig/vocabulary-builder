@@ -14,32 +14,7 @@ async function postExplainGrammar(req, res) {
     return res.status(200).send({Error: "The request should not be empty."});
   }
 
-  // Development API call:
-  const jsonServerSchema = {
-    "id": "crypt.uuid",
-    "explanation": "text.paragraph(3)"
-  };
-
-  const options = {
-    method: "POST",
-    url: GRAMMAR_EXPLANATIONS_ENDPOINT,
-    headers: {
-      "Content-Type": "application/json",
-      "X-Jsio-Token": `${process.env.JSON_SERVER_API_KEY}`
-    },
-    data: JSON.stringify({jsonServerSchema})
-  };
-
-  const getExplanationsPromise = axios
-    .request(options)
-    .then((response) => {
-      // debug("%s", "********SERVER RESPONSE************");
-      // debug("%j", response.data.jsonServerSchema);
-      return response.data.jsonServerSchema.explanation;
-    })
-    .catch((err) => console.log(`(1) An error ocurred: ${err}`));
-
-  const result = await getExplanationsPromise;
+  const result = await fetchProdGrammarExpls(sourceText);
   res.set("Content-Type", "application/json");
   return res.status(200).send(result);
 }
