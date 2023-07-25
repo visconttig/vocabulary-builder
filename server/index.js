@@ -7,6 +7,7 @@ const path = require("path");
 const translationsControler = require("./src/routes/translations/translations.controller.js");
 const nlpController = require("./src/routes/grammar/nlp.controller.js");
 const grammarController = require("./src/routes/grammar/grammar.controller.js");
+const dictionaryController = require("./src/routes/dictionary/dictionary.controller.js");
 
 const enviroment = process.env.NODE_ENV || "production";
 const app = express();
@@ -66,6 +67,7 @@ app.get("/grammar/nlp/tokens", (req, res) => {
 
 /* *** spanish-english bilingual dictionary *** */
 // app.post("/dictionary/es/:lemma" /* controller here */);
+app.post("/dictionary/es/:lemma", dictionaryController.fetchDefinitions);
 
 app.listen(PORT, () => {
   return console.log(`App listening on port ${PORT}`);
