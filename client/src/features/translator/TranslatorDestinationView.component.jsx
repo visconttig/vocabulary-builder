@@ -15,15 +15,19 @@ const TranslatorDestinationView = () => {
   );
   const dispatch = useDispatch();
 
+  
   useEffect(() => {
     const translatedText = reactLocalStorage.get("translatedText");
     if (translatedText?.length > 0 && translatedText !== "undefined") {
       dispatch(setTranslatedText(translatedText));
     }
   }, [dispatch]);
-
+  
   const isTranslated =
-    translatedText?.length > 0 && translatedText !== "undefined";
+  translatedText?.length > 0 && translatedText !== "undefined";
+  
+  const dangerousHTML = { __html: isTranslated ? (translatedText) : (translationPlaceholderText) };
+
 
   return (
     <>
@@ -31,11 +35,10 @@ const TranslatorDestinationView = () => {
         className={`translation-field main-text ${
           isTranslated > 0 ? ( null ) : ( "placeholder-text" )
         }`}
+
+        dangerouslySetInnerHTML={ dangerousHTML }
       >
-        {isTranslated ? (
-          translatedText 
-          ) : 
-        (translationPlaceholderText)}
+  
       </div>
     </>
   );
