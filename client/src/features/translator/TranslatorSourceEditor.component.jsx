@@ -6,6 +6,11 @@ import {reactLocalStorage} from "reactjs-localstorage";
 import {useEffect} from "react";
 import {useSelector, useDispatch} from "react-redux";
 import {setSourceText, setTranslatedText} from "./translatorSlice.js";
+import ContentEditable from "react-contenteditable";
+import { useRef } from "react";
+import striptags from "striptags";
+import { convert } from "html-to-text";
+
 
 import {getGrammar} from "../grammar/grammarSlice.js";
 import {resetGrammar} from "../grammar/grammarSlice.js";
@@ -13,22 +18,35 @@ import {resetGrammar} from "../grammar/grammarSlice.js";
 const TranslatorSourceEditor = () => {
   const sourceText = useSelector((store) => store.translator.sourceText);
   const dispatch = useDispatch();
+  const sourceFieldRef = useRef("");
+
+
 
   useEffect(() => {
     const sourceText = reactLocalStorage.get("sourceText");
 
     if (sourceText?.length > 0 && sourceText !== undefined) {
       dispatch(setSourceText(sourceText));
-      dispatch(getGrammar(sourceText));
+      dispatch(getGrammar(convert(sourceText, convertOptions)));
     }
   }, [dispatch]);
 
+
+  const convertOptions = {
+    preserveNewlines: false,
+  }
+
+  
   const onHandleChange = (e) => {
-    dispatch(setSourceText(e.target.value));
-    dispatch(getGrammar(e.target.value));
+    const html = e.target.value;
+    const strippedHtml = striptags(html, { allowedTags: new Set(["&nbsp;", "\u0020"])}, "\n");
+    const removeEmptyLines = convert(strippedHtml, convertOptions);
+    dispatch(setSourceText(html));
+    dispatch(getGrammar(removeEmptyLines));
     dispatch(setTranslatedText(""));
     dispatch(resetGrammar());
   };
+
 
   return (
     <GrammarlyEditorPlugin
@@ -41,18 +59,22 @@ const TranslatorSourceEditor = () => {
       clientId="client_5VsYi16JNi9w5uKzsrXWwH"
       className="grammarly main-text"
     >
-      <textarea
-        name="source-text"
+      
+   <ContentEditable 
+      ref={sourceFieldRef}
+      html={sourceText}
+      disabled={false}
+      onChange={onHandleChange}
+      name="source-text"
         id="source-editor"
         cols="1"
         rows="1"
         className="main-text"
-        onChange={onHandleChange}
-        value={sourceText}
-        placeholder="Escribe aquí para recibir sugerencias de corrección y traducir el texto..."
-      ></textarea>
+        />
+
     </GrammarlyEditorPlugin>
   );
 };
+
 
 export default TranslatorSourceEditor;

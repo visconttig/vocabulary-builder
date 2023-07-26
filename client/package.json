@@ -6,12 +6,15 @@
     "@babel/plugin-proposal-private-property-in-object": "latest",
     "@grammarly/editor-sdk-react": "^2.5.1",
     "@reduxjs/toolkit": "^1.9.5",
+    "html-to-text": "^9.0.5",
     "react": "^18.2.0",
+    "react-contenteditable": "^3.3.7",
     "react-dom": "^18.2.0",
     "react-redux": "^8.1.1",
     "react-scripts": "^5.0.1",
     "reactjs-localstorage": "^1.0.1",
-    "sass": "^1.63.6"
+    "sass": "^1.63.6",
+    "striptags": "^3.2.0"
   },
   "scripts": {
     "start": "react-scripts start",
