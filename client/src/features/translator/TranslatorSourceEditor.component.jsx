@@ -27,7 +27,9 @@ const TranslatorSourceEditor = () => {
 
     if (sourceText?.length > 0 && sourceText !== undefined) {
       dispatch(setSourceText(sourceText));
-      dispatch(getGrammar(convert(sourceText, convertOptions)));
+      let removedEmptyLines = striptags(sourceText, { allowedTags: new Set(["&nbsp;", "\u0020"])}, "\n");
+      removedEmptyLines = convert(removedEmptyLines, convertOptions);
+      dispatch(getGrammar(removedEmptyLines));
     }
   }, [dispatch]);
 
