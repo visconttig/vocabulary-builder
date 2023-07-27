@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const debug = require("debug");
 const path = require("path");
 
+
 const translationsControler = require("./src/routes/translations/translations.controller.js");
 const nlpController = require("./src/routes/grammar/nlp.controller.js");
 const grammarController = require("./src/routes/grammar/grammar.controller.js");
@@ -12,9 +13,11 @@ const dictionaryController = require("./src/routes/dictionary/dictionary.control
 const enviroment = process.env.NODE_ENV || "production";
 const app = express();
 const env_vars = require("dotenv").config({
-  path: path.join(__dirname, `.env.${enviroment}`),
+  path: path.join(__dirname, "..", `.env.${enviroment}`),
   debug: true
 });
+
+
 
 console.log("*****\n******\n******");
 console.log(`WORKING MODE: ${process.env.NODE_ENV}`);
@@ -49,15 +52,15 @@ app.get("/translations/translate", (req, res) => {
   res.status(200).send("Method NOT ALLOWED please use POST instead.");
 });
 
-/*    *** NOT ENOUGH QUOTA TO PROCEED*** */
-// app.post("/grammar/ai/explain", grammarController.openAi.controller.js);
 
-/* *** new API *** */
+
 app.post("/grammar/explain", grammarController.postExplainGrammar);
 
 app.get("/grammar/explain", (req, res) => {
   res.status(200).send("METHOD not allowed, please use POST instead");
 });
+
+
 
 app.post("/grammar/nlp/tokens", nlpController.postExtractTokens);
 
@@ -65,9 +68,17 @@ app.get("/grammar/nlp/tokens", (req, res) => {
   res.status.send("METHOD not allowed, please use POST instead");
 });
 
-/* *** spanish-english bilingual dictionary *** */
-// app.post("/dictionary/es/:lemma" /* controller here */);
-app.post("/dictionary/es/:lemma", dictionaryController.fetchDefinitions);
+
+
+
+app.post("/dictionary/es/:lemma", dictionaryController.fetchEsDefinitions);
+
+app.get("/dictionary/es/:lemma", (req, res) => {
+  res.status(200).send("METHOD not allowed, please use POST instead");
+});
+
+
+
 
 app.listen(PORT, () => {
   return console.log(`App listening on port ${PORT}`);
