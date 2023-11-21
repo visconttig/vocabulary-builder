@@ -3,13 +3,14 @@
 }
 
 #source-editor {
-  overflow-y: hidden;
+  overflow-y: auto;
   width: 100% !important;
   min-height: 20vh;
   max-height: 50vh;
   margin: 0;
   border: none;
 }
+
 
 textarea#source-editor {
   resize: none !important;
