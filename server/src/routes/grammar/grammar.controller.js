@@ -6,14 +6,15 @@ const GRAMMAR_EXPLANATIONS_ENDPOINT = "https://api.jsonserver.io";
 
 async function postExplainGrammar(req, res) {
   const sourceText = req.body.sourceText;
-  // debug("%j", "Data recieved ", req.body);
+
 
   if (!sourceText) {
-    return res.status(200).send({Error: "The request should not be empty."});
+    return res.status(200).send({
+      Error: "The request should not be empty."
+    });
   }
 
   const result = await fetchProdGrammarExpls(sourceText);
-  // res.set("Content-Type", "application/json");
   res.set("Content-Type", "text/html");
   return res.status(200).send(result);
 }

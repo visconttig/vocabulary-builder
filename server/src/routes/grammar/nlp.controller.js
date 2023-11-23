@@ -2,9 +2,8 @@ const express = require("express");
 const winkNLP = require("wink-nlp");
 const _ = require("lodash");
 
-// load english model
+
 const model = require("wink-eng-lite-web-model");
-// instantiate winkNLP
 const nlp = winkNLP(model);
 // 'its' helper to extract properties
 const its = nlp.its;
@@ -21,7 +20,6 @@ async function postExtractTokens(req, res) {
   let exampleData = {
     nlpGrammar: "",
     posWords: new Map(),
-    // sentences: [],
     sentences: new Map(),
   };
 
@@ -49,8 +47,6 @@ const extractTokens = async function (sourceText, exampleData) {
           word: word.out(),
           lemma: word.out(its.lemma),
           pos: word.out(its.pos),
-          /* TO DO: word frequency */
-          frecuency: null,
         };
       } else {
         //
@@ -101,10 +97,7 @@ async function markUpText(sourceText, exampleData) {
       sentence: s.out(),
       sentiment: s.out(its.sentiment),
     });
-    // exampleData.sentences.push({
-    //   sentence: s.out(),
-    //   sentiment: s.out(its.sentiment),
-    // });
+   
 
     let lowerCasedSentence = s.out().toLowerCase();
     if (!sentences.has(lowerCasedSentence)) {
