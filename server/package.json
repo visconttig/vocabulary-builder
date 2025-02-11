@@ -27,6 +27,7 @@
   },
   "devDependencies": {
     "debug": "^4.3.4",
+    "nodemon": "^3.1.9",
     "supports-color": "^9.4.0"
   }
 }
